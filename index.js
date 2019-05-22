@@ -31,13 +31,17 @@ const Connector = require('infra.connectors');
 
         // Compile
         let html = await marked(markdown);
+
+        console.log(chalk`{bold Translated markdown into html:}`)
         console.log(chalk`{gray ${html}}`);
 
         const $ = cheerio.load(html)
 
-        // Headless infrastructure
+        // Headless infrastructure (local)
         let conn = Connector.getConnector('local');
         let op = new Operators(conn);
+
+        console.log(chalk`{bold \nRunning documentation tests:\n}`)
 
         // Select/translate/perform/assert workflow
         let content = $('.language-php').text();
@@ -52,8 +56,6 @@ const Connector = require('infra.connectors');
         // server...
         op.running(cmd);
         
-        await sleep(2000);
-
         // netcat test
         let netcatCmd = $('p:contains("another terminal:")').next().text();
         
@@ -78,6 +80,10 @@ const Connector = require('infra.connectors');
         else{
             console.log(chalk`{green Received expected response: ${serverResponse}}`);
         }
+        
+
+        // force process exit.
+        process.exit()
 
     });
 
@@ -87,6 +93,3 @@ const Connector = require('infra.connectors');
 
 })();
 
-function sleep(millis) {
-    return new Promise(resolve => setTimeout(resolve, millis));
-}
