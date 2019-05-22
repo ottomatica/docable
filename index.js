@@ -50,7 +50,9 @@ const Connector = require('infra.connectors');
         }
 
         // server...
-        //await op.running(cmd);
+        op.running(cmd);
+        
+        await sleep(2000);
 
         // netcat test
         let netcatCmd = $('p:contains("another terminal:")').next().text();
@@ -84,3 +86,7 @@ const Connector = require('infra.connectors');
     yargs.help().argv;
 
 })();
+
+function sleep(millis) {
+    return new Promise(resolve => setTimeout(resolve, millis));
+}
