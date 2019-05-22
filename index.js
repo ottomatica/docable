@@ -54,7 +54,7 @@ const Connector = require('infra.connectors');
         }
 
         // server...
-        op.running(cmd);
+        await op.running(cmd);
         
         // netcat test
         let netcatCmd = $('p:contains("another terminal:")').next().text();
