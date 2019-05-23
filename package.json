@@ -2,6 +2,7 @@
   "name": "docable",
   "version": "0.1.0",
   "description": "CI for documentation. Running documentation.",
+  "bin": "index.js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
