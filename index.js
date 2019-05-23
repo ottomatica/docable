@@ -38,17 +38,8 @@ const Parse     = require('./lib/parse');
                 await stepFn($,sl);
             }
         }
-
-        // // create php content
-        // await sl.selectAsFile($('.language-php').text(), 'server.php');
-
-        // // start server
-        // await sl.selectAndServe($('p:contains("start it:")').next().text());
-
-        // // netcat test
-        // await sl.selectAndExpect($('p:contains("another terminal:")').next().text());
         
-        // force process exit.
+        // force process exit (killing child processes when running in local)
         process.exit()
 
     });
