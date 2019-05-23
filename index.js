@@ -7,7 +7,8 @@ const child = require('child_process');
 const cheerio = require('cheerio');
 const marked = require('marked');
 
-const Operators = require('./lib/operators');
+const Select    = require('./lib/select');
+const Operators = require('./lib/operators')
 const Connector = require('infra.connectors');
 
 (async()=>{
@@ -59,49 +60,21 @@ const Connector = require('infra.connectors');
             //console.log(`Infrastructure status is ready: ${status}`);
         }
 
-        let op = new Operators(conn);
+        let sl = new Select( new Operators(conn) );
 
         console.log(chalk`{bold \nRunning documentation tests:\n}`)
 
         // Select/translate/perform/assert workflow
-        let content = $('.language-php').text();
-        await op.file( content, 'server.php');
 
-        let cmd = $('p:contains("start it:")').next().text();
-        if( cmd.startsWith("$") )
-        {
-            cmd = cmd.substr(1).trimLeft();
-        }
+        // create php content
+        await sl.selectAsFile($('.language-php').text(), 'server.php');
 
-        // server...
-        await op.running(cmd);
-        
+        // start server
+        await sl.selectAndServe($('p:contains("start it:")').next().text());
+
         // netcat test
-        let netcatCmd = $('p:contains("another terminal:")').next().text();
+        await sl.selectAndExpect($('p:contains("another terminal:")').next().text());
         
-        // The first line is command, the second is input for the command.
-        // The third line is the expected output.
-        let lines = netcatCmd.split('\n');
-        let expect = lines[1].trimRight();
-        lines.splice(1,1);
-        let toRun = lines.join('\n') + "\n\n";
-
-        if( toRun.startsWith("$") )
-        {
-            toRun = toRun.substr(1).trimLeft();
-        }
-
-        let serverResponse = await op.run(toRun);
-
-        if(serverResponse.trimRight() != expect )
-        {
-            console.log(chalk`{red expected ${serverResponse} == ${expect}}`);
-        }
-        else{
-            console.log(chalk`{green Received expected response: ${serverResponse}}`);
-        }
-        
-
         // force process exit.
         process.exit()
 

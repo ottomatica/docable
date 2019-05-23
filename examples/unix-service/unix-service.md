@@ -25,7 +25,7 @@ $ php server.php
 And test it in another terminal:
 
 ```
-$ echo 'Hello, world!' | nc -w 1 -u 127.0.0.1 10000
+client$ echo 'Hello, world!' | nc -w 1 -u 127.0.0.1 10000
 Uryyb, jbeyq!
 ```
 
