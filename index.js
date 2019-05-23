@@ -17,6 +17,7 @@ const Infra     = require('./lib/infrastructure');
 
         let markdown = fs.readFileSync( argv.documentation ).toString();
         let infra = argv.infra;
+        let kind = 'slim';
 
         // Set options
         marked.setOptions({
@@ -42,7 +43,7 @@ const Infra     = require('./lib/infrastructure');
         // Headless infrastructure (slim)
         //let conn = Connector.getConnector('local');
         // to be replaced by better infra.connectors
-        let conn = await Infra.setup('phpx');
+        let conn = await Infra.setup('slim', infra, 'phpx');
 
         let sl = new Select( new Operators(conn) );
 
