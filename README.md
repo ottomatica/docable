@@ -68,3 +68,14 @@ The stepfile using a "select-assert" pattern for testing documentation. That is,
 The result looks something like this:
 
 ![example execution](img/example-run.png)
+
+
+## Installing docable
+
+```
+$ git clone https://github.com/ottomatica/docable
+$ npm install
+$ npm link
+```
+
+Using `slim` provider requires installing [slim](https://github.com/ottomatica/slim). You can also switch the stepfile to use a local provider under `setup:`.
