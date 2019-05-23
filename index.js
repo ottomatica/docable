@@ -8,8 +8,8 @@ const cheerio = require('cheerio');
 const marked = require('marked');
 
 const Select    = require('./lib/select');
-const Operators = require('./lib/operators')
-const Connector = require('infra.connectors');
+const Operators = require('./lib/operators');
+const Infra     = require('./lib/infrastructure');
 
 (async()=>{
 
@@ -41,24 +41,8 @@ const Connector = require('infra.connectors');
 
         // Headless infrastructure (slim)
         //let conn = Connector.getConnector('local');
-
         // to be replaced by better infra.connectors
-        let conn = Connector.getConnector('slim', 'phpx');
-        console.log('Headless infrastructure is:', await conn.getState());
-
-        if( await conn.getState().catch(e => false) === "running" )
-        {
-        }
-        else
-        {
-            console.log("Preparing headless infrastructure one-time build")
-            child.execSync(`slim build ${infra}`, {stdio:"inherit"});
-            child.execSync(`slim delete vm phpx`, {stdio:"inherit"});
-            child.execSync(`slim run phpx ${path.basename(infra)}`, {stdio:"inherit"});
-            conn = Connector.getConnector('slim', 'phpx');
-            //let status = await conn.ready();
-            //console.log(`Infrastructure status is ready: ${status}`);
-        }
+        let conn = await Infra.setup('phpx');
 
         let sl = new Select( new Operators(conn) );
 
