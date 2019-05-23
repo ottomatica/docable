@@ -1,7 +1,7 @@
 setup:
-  local: {}  
-#  slim:
-#    image: ubuntu16.04-php/info.yml
+#  local: {}  
+  slim:
+    image: ubuntu16.04-php
 
 unix-service.md: 
   steps:
