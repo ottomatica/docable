@@ -1,0 +1,5 @@
+description: A simple ubuntu xenial server with php.
+base_repository: https://github.com/ottomatica/slim-images/
+base_directory: ubuntu16.04-simple
+base_args:
+  PKGS: php netcat-openbsd

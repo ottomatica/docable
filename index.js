@@ -12,9 +12,10 @@ const Connector = require('infra.connectors');
 
 (async()=>{
 
-    yargs.command('test <documentation>', 'Test markdown file', (yargs) => { }, async (argv) => {
+    yargs.command('test <documentation> <infra>', 'Test markdown file', (yargs) => { }, async (argv) => {
 
         let markdown = fs.readFileSync( argv.documentation ).toString();
+        let infra = argv.infra;
 
         // Set options
         marked.setOptions({
@@ -37,8 +38,25 @@ const Connector = require('infra.connectors');
 
         const $ = cheerio.load(html)
 
-        // Headless infrastructure (local)
-        let conn = Connector.getConnector('local');
+        // Headless infrastructure (slim)
+        //let conn = Connector.getConnector('local');
+
+        // to be replaced by better infra.connectors
+        let conn = Connector.getConnector('slim', 'phpx');
+        console.log('Headless infrastructure is:', await conn.getState());
+
+        if( await conn.getState().catch(e => false) === "running" )
+        {
+        }
+        else
+        {
+            console.log("Preparing headless infrastructure one-time build")
+            child.execSync(`slim build ${infra}`);
+            child.execSync(`slim delete vm phpx`);
+            child.execSync(`slim run phpx ${path.basename(infra)}`);
+            conn = Connector.getConnector('slim', 'phpx');
+        }
+
         let op = new Operators(conn);
 
         console.log(chalk`{bold \nRunning documentation tests:\n}`)
