@@ -6,7 +6,6 @@ const chalk = require('chalk');
 
 const Select    = require('./lib/select');
 const Operators = require('./lib/operators');
-const Infra     = require('./lib/infrastructure');
 const Steps     = require('./lib/steps');
 const Parse     = require('./lib/parse');
 
@@ -14,21 +13,17 @@ const Parse     = require('./lib/parse');
 
     yargs.command('test <stepfile>', 'Test markdown file', (yargs) => { }, async (argv) => {
 
-        let kind = 'slim';
-
-        // Headless infrastructure (slim)
-        //let conn = Connector.getConnector('local');
-        // to be replaced by better infra.connectors
-        let conn = await Infra.setup('slim', 'tobefixed', 'phpx');
-
-        let sl = new Select( new Operators(conn) );
+        // documents and associated steps; connector to infrastructure provider
         let stepper = new Steps();
         let parser   = new Parse();
+
+        let {docs, conn} = await stepper.read(argv.stepfile);
+        let sl = new Select( new Operators(conn) );
 
         console.log(chalk`{bold \nRunning documentation tests:\n}`)
 
         // Select/translate/perform/assert workflow
-        let docs = await stepper.read(argv.stepfile);
+        
         for( let doc of docs )
         {
             let md = path.join( path.dirname(argv.stepfile), doc.file);
