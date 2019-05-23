@@ -65,4 +65,6 @@ unix-service.md:
 
 The stepfile using a "select-assert" pattern for testing documentation. That is, we first find an instruction step in the tutorial using a lightweight selector, then, we transform the step into an action we can perform within a "headless infrastructure" (such as a vm), and finally we assert it's behavior is correct.
 
+The result looks something like this:
+
 ![example execution](img/example-run.png)
