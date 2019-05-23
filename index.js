@@ -51,7 +51,7 @@ const Connector = require('infra.connectors');
         else
         {
             console.log("Preparing headless infrastructure one-time build")
-            child.execSync(`slim build ${infra}`);
+            child.execSync(`slim build ${infra}`, {stdio: 'inherit'});
             child.execSync(`slim delete vm phpx`);
             child.execSync(`slim run phpx ${path.basename(infra)}`);
             conn = Connector.getConnector('slim', 'phpx');
