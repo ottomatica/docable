@@ -38,7 +38,7 @@ Cool, it works. Now we want this script to run at all times, be restarted in cas
 
 ----
 
-How would we test these instructions actually work? On different platforms and versions of tools? That's what `docable` helps do for you.
+How would we test these instructions actually work? After you updated them? On different platforms and versions of php (5 vs 7) or tools (netcat bsd vs net traditional)? After a year has passed? That's what `docable` helps do for you.
 
 ## Testing with `docable`
 
