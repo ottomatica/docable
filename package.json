@@ -23,8 +23,8 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "cheerio": "^1.0.0-rc.3",
+    "infra.connectors": "github:ottomatica/infra.connectors",
     "marked": "^0.6.2",
-    "yargs": "^13.2.4",
-    "infra.connectors": "github:ottomatica/infra.connectors"
+    "yargs": "^13.2.4"
   }
 }

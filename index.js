@@ -51,10 +51,12 @@ const Connector = require('infra.connectors');
         else
         {
             console.log("Preparing headless infrastructure one-time build")
-            child.execSync(`slim build ${infra}`);
-            child.execSync(`slim delete vm phpx`);
-            child.execSync(`slim run phpx ${path.basename(infra)}`);
+            child.execSync(`slim build ${infra}`, {stdio:"inherit"});
+            child.execSync(`slim delete vm phpx`, {stdio:"inherit"});
+            child.execSync(`slim run phpx ${path.basename(infra)}`, {stdio:"inherit"});
             conn = Connector.getConnector('slim', 'phpx');
+            //let status = await conn.ready();
+            //console.log(`Infrastructure status is ready: ${status}`);
         }
 
         let op = new Operators(conn);
