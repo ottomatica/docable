@@ -1,0 +1,6 @@
+setup:
+  slim: ubuntu16.04-php/info.yml
+steps:
+  - selectAsFile: ROT13 transformation => server.php
+  - selectAndServe: "start it:"
+  - selectAndExpect: "another terminal:"

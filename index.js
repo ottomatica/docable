@@ -10,6 +10,7 @@ const marked = require('marked');
 const Select    = require('./lib/select');
 const Operators = require('./lib/operators');
 const Infra     = require('./lib/infrastructure');
+const Steps     = require('./lib/steps');
 
 (async()=>{
 
@@ -46,19 +47,25 @@ const Infra     = require('./lib/infrastructure');
         let conn = await Infra.setup('slim', infra, 'phpx');
 
         let sl = new Select( new Operators(conn) );
+        let stepper = new Steps();
 
         console.log(chalk`{bold \nRunning documentation tests:\n}`)
 
         // Select/translate/perform/assert workflow
+        let steps = await stepper.read("examples/unix-service/steps.yml");
+        for( let stepFn of steps )
+        {
+            stepFn($,sl);
+        }
 
-        // create php content
-        await sl.selectAsFile($('.language-php').text(), 'server.php');
+        // // create php content
+        // await sl.selectAsFile($('.language-php').text(), 'server.php');
 
-        // start server
-        await sl.selectAndServe($('p:contains("start it:")').next().text());
+        // // start server
+        // await sl.selectAndServe($('p:contains("start it:")').next().text());
 
-        // netcat test
-        await sl.selectAndExpect($('p:contains("another terminal:")').next().text());
+        // // netcat test
+        // await sl.selectAndExpect($('p:contains("another terminal:")').next().text());
         
         // force process exit.
         process.exit()
