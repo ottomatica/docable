@@ -67,7 +67,7 @@ The stepfile using a "select-assert" pattern for testing documentation. That is,
 
 The result looks something like this:
 
-![example report](img/ex)
+![example report](img/example-report.png)
 
 Turns out that our tutorial breaks if a different version of netcat is used. Oops!
 
