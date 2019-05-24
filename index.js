@@ -39,6 +39,40 @@ const Parse     = require('./lib/parse');
 
     });
 
+    yargs.command('report <stepfile>', 'Test markdown file and report feedback into rendered output', (yargs) => { }, async (argv) => {
+
+        // documents and associated steps; connector to infrastructure provider
+        let stepper = new Steps();
+        let parser   = new Parse();
+
+        let {docs, conn} = await stepper.read(argv.stepfile);
+        let sl = new Select( new Operators(conn) );
+
+        console.log(chalk`{bold \nRunning documentation tests:\n}`)
+
+        // Select/translate/perform/assert workflow
+        
+        let results_dir = path.join(path.dirname(argv.stepfile), 'docable_results');
+        if (!fs.existsSync(results_dir)) {
+            fs.mkdirSync(results_dir);
+        }
+        
+        for( let doc of docs )
+        {
+            let md = path.join( path.dirname(argv.stepfile), doc.file);
+            let $ = await parser.markdown2HTML(md);
+            for( let stepFn of doc.steps )
+            {
+                let result = await stepFn($, sl);
+                fs.writeFileSync(path.join(results_dir, path.basename(doc.file, '.md') + '.html'), $.html())
+            }
+        }
+        
+        // force process exit (killing child processes when running in local)
+        process.exit()
+
+    });
+
 
     // Turn on help and access argv
     yargs.help().argv;
