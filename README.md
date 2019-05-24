@@ -69,7 +69,7 @@ The result looks something like this:
 
 ![example report](img/example-report.png)
 
-Turns out that our tutorial breaks if a different version of netcat is used. Oops!
+Turns out that our tutorial breaks if using a different version of netcat. Oops!
 
 After fixing the issue by changing to using "-w 1" (terminated after timeout instead of number of packets), running again, this time just using the cli output from `docable test`, we see:
 
