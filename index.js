@@ -63,7 +63,7 @@ const Parse     = require('./lib/parse');
             let $ = await parser.markdown2HTML(md);
             for( let stepFn of doc.steps )
             {
-                let result = await stepFn($, sl);
+                await stepFn($, sl);
                 fs.writeFileSync(path.join(results_dir, path.basename(doc.file, '.md') + '.html'), $.html())
             }
         }
