@@ -28,7 +28,7 @@ $ php server.php
 And test it in another terminal:
 
 ```
-client$ echo 'Hello, world!' | nc -w 1 -u 127.0.0.1 10000
+client$ echo 'Hello, world!' | nc -W 1 -u 127.0.0.1 10000
 Uryyb, jbeyq!
 ```
 
@@ -45,7 +45,7 @@ How would we test these instructions actually work? After you updated them? On d
 To test this example tutorial, we can run the following:
 
 ```bash
-docable test examples/unix-service/steps.yml
+docable report examples/unix-service/steps.yml
 ```
 
 `docable` uses a stepfile, such as the following.
@@ -66,6 +66,12 @@ unix-service.md:
 The stepfile using a "select-assert" pattern for testing documentation. That is, we first find an instruction step in the tutorial using a lightweight selector, then, we transform the step into an action we can perform within a "headless infrastructure" (such as a vm), and finally we assert it's behavior is correct.
 
 The result looks something like this:
+
+![example report](img/ex)
+
+Turns out that our tutorial breaks if a different version of netcat is used. Oops!
+
+After fixing the issue by changing to using "-w 1" (terminated after timeout instead of number of packets), running again, this time just using the cli output from `docable test`, we see:
 
 ![example execution](img/example-run.png)
 
