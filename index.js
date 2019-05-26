@@ -17,8 +17,9 @@ const Parse     = require('./lib/parse');
         let stepper = new Steps();
         let parser   = new Parse();
 
-        let {docs, conn} = await stepper.read(argv.stepfile);
-        let sl = new Select( new Operators(conn) );
+        let {docs, conn, provider} = await stepper.read(argv.stepfile);
+        let cwd = provider === 'local' ? path.join(__dirname, path.dirname(argv.stepfile), 'docable_results') : '.';
+        let sl = new Select( new Operators(conn, cwd) );
 
         console.log(chalk`{bold \nRunning documentation tests:\n}`)
 
@@ -45,8 +46,9 @@ const Parse     = require('./lib/parse');
         let stepper = new Steps();
         let parser   = new Parse();
 
-        let {docs, conn} = await stepper.read(argv.stepfile);
-        let sl = new Select( new Operators(conn) );
+        let {docs, conn, provider} = await stepper.read(argv.stepfile);
+        let cwd = provider === 'local' ? path.join(__dirname, path.dirname(argv.stepfile), 'docable_results') : '.';
+        let sl = new Select( new Operators(conn, cwd) );
 
         console.log(chalk`{bold \nRunning documentation tests:\n}`)
 
