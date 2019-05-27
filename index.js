@@ -50,7 +50,7 @@ const Parse     = require('./lib/parse');
         let parser   = new Parse();
 
         let {docs, conn, provider} = await stepper.read(argv.stepfile);
-        let cwd = provider === 'local' ? path.join(__dirname, path.dirname(argv.stepfile), 'docable_results') : '.';
+        let cwd = provider === 'local' ? path.join(process.cwd(), path.dirname(argv.stepfile), 'docable_results') : '.';
 
         let op = new Operators(conn, cwd);
         let sl = new Select( op );
