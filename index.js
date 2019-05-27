@@ -39,7 +39,7 @@ const Parse     = require('./lib/parse');
 
         // Close spawned processes
         await op.tearDown();
-        // process.exit()
+        process.exit()
 
     });
 
@@ -77,7 +77,7 @@ const Parse     = require('./lib/parse');
         
         // Close spawned processes
         await op.tearDown();
-        // process.exit()
+        process.exit()
 
     });
 
