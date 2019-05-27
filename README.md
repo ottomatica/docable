@@ -28,7 +28,7 @@ $ php server.php
 And test it in another terminal:
 
 ```
-client$ echo 'Hello, world!' | nc -W 1 -u 127.0.0.1 10000
+client$ echo 'Hello, world!' | nc -q 1 -u 127.0.0.1 10000
 Uryyb, jbeyq!
 ```
 
@@ -69,9 +69,9 @@ The result looks something like this:
 
 ![example report](img/example-report.png)
 
-Turns out that our tutorial breaks if using a different version of netcat. Oops!
+Turns out that our tutorial breaks if using a different version of netcat, which does not support the `-q 1` option. Oops!
 
-After fixing the issue by changing to using "-w 1" (terminated after timeout instead of number of packets), running again, this time just using the cli output from `docable test`, we see:
+After fixing the issue by changing to using "-w 1" (terminated after timeout instead of time since not STDIN input). Running `docable test`, we have fixed the tutorial:
 
 ![example execution](img/example-run.png)
 
