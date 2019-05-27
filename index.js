@@ -38,7 +38,7 @@ const Parse     = require('./lib/parse');
         }
 
         // Close spawned processes
-        op.tearDown();
+        await op.tearDown();
         // process.exit()
 
     });
