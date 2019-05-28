@@ -5,7 +5,7 @@
 
 Let’s create a small server using PHP. I can see your eyebrows rising, but it works surprisingly well. We’ll listen to UDP port 10000, and return any message received with a ROT13 transformation:
 
-```php
+```php|content=server.php
 <?php
 $sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
 socket_bind($sock, '0.0.0.0', 10000);
@@ -25,7 +25,7 @@ $ php server.php
 And test it in another terminal:
 
 ```
-client$ echo 'Hello, world!' | nc -w 1 -u 127.0.0.1 10000
+client$ echo 'Hello, world!' | nc -W 1 -u 127.0.0.1 10000
 Uryyb, jbeyq!
 ```
 
