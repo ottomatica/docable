@@ -18,14 +18,14 @@ for (;;) {
 
 Let’s start it:
 
-```
+```bash|serve
 $ php server.php
 ```
 
 And test it in another terminal:
 
-```
-client$ echo 'Hello, world!' | nc -W 1 -u 127.0.0.1 10000
+```bash|expect=1
+client$ echo 'Hello, world!' | nc -w 1 -u 127.0.0.1 10000
 Uryyb, jbeyq!
 ```
 
