@@ -30,10 +30,10 @@ const Parse     = require('./lib/parse');
         for( let doc of docs )
         {
             let md = path.join( path.dirname(argv.stepfile), doc.file);
-            let $ = await parser.markdown2HTML(md);
+            let {engine, metadata} = await parser.markdown2HTML(md);
             for( let stepFn of doc.steps )
             {
-                await stepFn($,sl);
+                await stepFn(engine,sl);
             }
         }
 
@@ -67,11 +67,11 @@ const Parse     = require('./lib/parse');
         for( let doc of docs )
         {
             let md = path.join( path.dirname(argv.stepfile), doc.file);
-            let $ = await parser.markdown2HTML(md);
+            let {engine, metadata} = await parser.markdown2HTML(md);
             for( let stepFn of doc.steps )
             {
-                await stepFn($, sl);
-                fs.writeFileSync(path.join(results_dir, path.basename(doc.file, '.md') + '.html'), $.html())
+                await stepFn(engine, sl);
+                fs.writeFileSync(path.join(results_dir, path.basename(doc.file, '.md') + '.html'), engine.html())
             }
         }
         
