@@ -7,7 +7,6 @@ const chalk = require('chalk');
 const Select    = require('./lib/select');
 const Operators = require('./lib/operators');
 const Steps     = require('./lib/steps');
-const Parse     = require('./lib/parse');
 
 (async()=>{
 
@@ -33,7 +32,6 @@ async function testreport(mode, argv)
 {
     // documents and associated steps; connector to infrastructure provider
     let stepper = new Steps();
-    let parser   = new Parse();
 
     let {docs, conn, provider} = await stepper.read(argv.stepfile);
     let cwd = provider === 'local' ? path.join(process.cwd(), path.dirname(argv.stepfile), 'docable_results') : '.';
@@ -52,8 +50,7 @@ async function testreport(mode, argv)
     
     for( let doc of docs )
     {
-        let md = path.join( path.dirname(argv.stepfile), doc.file);
-        let {engine, metadata} = await parser.markdown2HTML(md);
+        let engine = doc.engine;
         for( let stepFn of doc.steps )
         {
             await stepFn(engine, sl);
