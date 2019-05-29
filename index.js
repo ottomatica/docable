@@ -54,10 +54,12 @@ async function testreport(mode, argv)
         for( let stepFn of doc.steps )
         {
             await stepFn(engine, sl);
-            if( mode == "report")
-            {
-                fs.writeFileSync(path.join(results_dir, path.basename(doc.file, '.md') + '.html'), engine.html())
-            }
+        }
+        if( mode == "report")
+        {
+            let reportHtml = path.join(results_dir, path.basename(doc.file, '.md') + '.html');
+            fs.writeFileSync(reportHtml, engine.html())
+            console.log(`Generated report ${reportHtml}`);
         }
     }
     
