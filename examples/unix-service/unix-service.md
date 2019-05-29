@@ -44,7 +44,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=centos
-ExecStart=/usr/bin/env php /path/to/server.php
+ExecStart=/usr/bin/env php ~/server.php
 
 [Install]
 WantedBy=multi-user.target
