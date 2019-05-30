@@ -34,7 +34,7 @@ Cool, it works. Now we want this script to run at all times, be restarted in cas
 Turning it into a service
 Let’s create a file called `/etc/systemd/system/rot13.service`:
 
-```ini
+```ini|content=/etc/systemd/system/rot13.service
 [Unit]
 Description=ROT13 demo service
 After=network.target
@@ -57,12 +57,12 @@ You’ll need to:
 
 That’s it. We can now start the service:
 
-```
+```bash|run
 $ systemctl start rot13
 ```
 
 And automatically get it to start on boot:
 
-```
+```bash|run
 $ systemctl enable rot13
 ```
