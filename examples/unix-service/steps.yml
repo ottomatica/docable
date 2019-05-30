@@ -1,11 +1,16 @@
 setup:
   local: {}
-  #slim:
+  # slim:
   #  image: ubuntu16.04-php
 
 unix-service.md: 
   steps:
     - selectAsFile: ROT13 transformation => server.php
+    # - selectAndServe: "start it:"
+    # - selectAndExpect: "another terminal:"
+    - selectAsFile: "create a file called => /etc/systemd/system/rot13.service"
+    - selectAndRun: "start the service:"
+    - selectAndRun: "start on boot:"
     - selectAndServe: "start it:"
     - selectAndExpect: "another terminal:"
 
