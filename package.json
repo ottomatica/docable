@@ -24,7 +24,7 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "cheerio": "^1.0.0-rc.3",
-    "highlight.js": "^9.15.6",
+    "highlight.js": "^9.15.8",
     "infra.connectors": "github:ottomatica/infra.connectors",
     "js-yaml": "^3.13.1",
     "marked": "^0.6.2",
