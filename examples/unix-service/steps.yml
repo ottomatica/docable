@@ -1,9 +1,10 @@
 setup:
-  local: {}
-  # slim:
-  #  image: ubuntu16.04-php
+  # local: {}
+  slim:
+   image: ubuntu16.04-php
+   provider: kvm
 
-unix-service.md: 
+unix-service.md:
   steps:
     - selectAsFile: ROT13 transformation => server.php
     # - selectAndServe: "start it:"
@@ -14,5 +15,5 @@ unix-service.md:
     - selectAndServe: "start it:"
     - selectAndExpect: "another terminal:"
 
-unix-service-inline.md: 
+unix-service-inline.md:
   steps: inline
