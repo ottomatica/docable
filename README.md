@@ -71,7 +71,7 @@ The result looks something like this:
 
 Turns out that our tutorial breaks if using a different version of netcat, which does not support the `-q 1` option. Oops!
 
-After fixing the issue by changing to using "-w 1" (terminated after timeout instead of time since not STDIN input). Running `docable test`, we have fixed the tutorial:
+After fixing the issue by changing to using "-w 1" (terminated after timeout instead of time since no STDIN input). Running `docable test`, we verify have fixed the tutorial:
 
 ![example execution](img/example-run.png)
 
