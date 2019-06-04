@@ -67,3 +67,5 @@ async function testreport(mode, argv)
     await op.tearDown();
     process.exit()
 }
+
+module.exports = testreport;
