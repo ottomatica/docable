@@ -28,10 +28,10 @@ const Steps     = require('./lib/steps');
 
 })();
 
-async function testreport(mode, argv)
+async function testreport(mode, argv, renderer = undefined)
 {
     // documents and associated steps; connector to infrastructure provider
-    let stepper = new Steps();
+    let stepper = new Steps(renderer);
 
     let {docs, conn, provider} = await stepper.read(argv.stepfile);
     let cwd = provider === 'local' ? path.join(process.cwd(), path.dirname(argv.stepfile), 'docable_results') : '.';
@@ -47,13 +47,15 @@ async function testreport(mode, argv)
     if (!fs.existsSync(results_dir)) {
         fs.mkdirSync(results_dir);
     }
-    
+
+    let results = [];
     for( let doc of docs )
     {
         let engine = doc.engine;
         for( let stepFn of doc.steps )
         {
-            await stepFn(engine, sl);
+            let result = await stepFn(engine, sl);
+            results.push(result);
         }
         if( mode == "report")
         {
@@ -65,7 +67,11 @@ async function testreport(mode, argv)
     
     // Close spawned processes
     await op.tearDown();
-    process.exit()
+
+    let exitCode = 0;
+    if(results.filter(result => result.status == false).length > 0) exitCode = 1;
+
+    process.exit(exitCode);
 }
 
 module.exports = testreport;
