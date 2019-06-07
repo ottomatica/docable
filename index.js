@@ -28,10 +28,10 @@ const Steps     = require('./lib/steps');
 
 })();
 
-async function testreport(mode, argv)
+async function testreport(mode, argv, renderer = undefined)
 {
     // documents and associated steps; connector to infrastructure provider
-    let stepper = new Steps();
+    let stepper = new Steps(renderer);
 
     let {docs, conn, provider} = await stepper.read(argv.stepfile);
     let cwd = provider === 'local' ? path.join(process.cwd(), path.dirname(argv.stepfile), 'docable_results') : '.';
@@ -47,7 +47,7 @@ async function testreport(mode, argv)
     if (!fs.existsSync(results_dir)) {
         fs.mkdirSync(results_dir);
     }
-    
+
     for( let doc of docs )
     {
         let engine = doc.engine;
