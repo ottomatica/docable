@@ -1,0 +1,10 @@
+setup:
+  local: {}
+  git: https://github.com/CSC-DevOps/CM
+
+
+CM/README.md:
+  steps:
+    - selectAndRun: "Create the Virtual Machine"
+
+

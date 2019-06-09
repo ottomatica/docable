@@ -28,6 +28,7 @@
     "infra.connectors": "github:ottomatica/infra.connectors",
     "js-yaml": "^3.13.1",
     "marked": "^0.6.2",
+    "simple-git": "^1.113.0",
     "yargs": "^13.2.4"
   }
 }
