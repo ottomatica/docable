@@ -5,6 +5,8 @@ setup:
 
 CM/README.md:
   steps:
-    - selectAndRun: "Create the Virtual Machine"
+    - selectAndRun: 
+        select: "Create the Virtual Machine"
+        expectblock: "You should see baker create the virtual machine."
 
 
