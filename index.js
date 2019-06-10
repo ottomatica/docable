@@ -33,9 +33,9 @@ async function testreport(mode, argv, renderer = undefined)
     // documents and associated steps; connector to infrastructure provider
     let stepper = new Steps(renderer);
 
-    let {docs, conn, provider} = await stepper.read(argv.stepfile);
-    let cwd = provider === 'local' ? path.join(process.cwd(), path.dirname(argv.stepfile), 'docable_results') : '.';
+    let {docs, conn, cwd} = await stepper.read(argv.stepfile);
 
+    console.log(`Using cwd ${cwd}`);
     let op = new Operators(conn, cwd);
     let sl = new Select( op );
 
