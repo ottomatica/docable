@@ -1,8 +1,8 @@
 setup:
-  # local: {}
-  slim:
-   image: ubuntu16.04-php
-   provider: kvm
+  local: {}
+  # slim:
+  #  image: ubuntu16.04-php
+  #  provider: kvm
 
 unix-service.md:
   steps:
