@@ -39,12 +39,13 @@ Let’s create a file called `/etc/systemd/system/rot13.service`:
 Description=ROT13 demo service
 After=network.target
 StartLimitIntervalSec=0
+
 [Service]
 Type=simple
 Restart=always
 RestartSec=1
-User=centos
-ExecStart=/usr/bin/env php ~/server.php
+User=root
+ExecStart=/bin/sh -c "php $HOME/server.php"
 
 [Install]
 WantedBy=multi-user.target
