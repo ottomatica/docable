@@ -28,10 +28,10 @@ const Steps     = require('./lib/steps');
 
 })();
 
-async function testreport(mode, argv, renderer = undefined)
+async function testreport(mode, argv, renderer = undefined, selector = undefined)
 {
     // documents and associated steps; connector to infrastructure provider
-    let stepper = new Steps(renderer);
+    let stepper = new Steps(renderer, selector);
 
     let {docs, conn, cwd} = await stepper.read(argv.stepfile);
 
