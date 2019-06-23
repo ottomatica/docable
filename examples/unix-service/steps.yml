@@ -10,11 +10,11 @@ unix-service.md:
     # - selectAndServe: "start it:"
     # - selectAndExpect: "another terminal:"
     - selectAsFile: "create a file called => /etc/systemd/system/rot13.service"
-      become: root
+      user: root
     - selectAndRun: "start the service:"
-      become: root
+      user: root
     - selectAndRun: "start on boot:"
-      become: root
+      user: root
     - selectAndServe: "start it:"
     - selectAndExpect: "another terminal:"
 
