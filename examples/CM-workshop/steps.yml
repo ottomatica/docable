@@ -3,7 +3,7 @@ setup:
   git: https://github.com/CSC-DevOps/CM
 
 
-CM/README.md:
+README.md:
   steps:
     - selectAndRun: 
         select: "Create the Virtual Machine"
