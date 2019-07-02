@@ -1,5 +1,7 @@
 setup:
-  local: {}
+  slim:
+    image: ubuntu16.04-baker
+    provider: kvm
   git: https://github.com/CSC-DevOps/CM
 
 
