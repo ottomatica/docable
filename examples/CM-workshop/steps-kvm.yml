@@ -2,6 +2,7 @@ setup:
   slim:
     image: ubuntu16.04-baker
     provider: kvm
+    memory: 4096
   git: https://github.com/CSC-DevOps/CM
 
 
