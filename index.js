@@ -4,9 +4,9 @@ const fs    = require('fs');
 const yargs = require('yargs');
 const chalk = require('chalk');
 
-const Select    = require('./lib/select');
+const Select    = require('./lib/test/select');
 const Operators = require('./lib/infra/operators');
-const Steps     = require('./lib/steps');
+const Steps     = require('./lib/read/steps');
 
 (async()=>{
 
