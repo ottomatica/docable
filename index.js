@@ -6,7 +6,7 @@ const chalk = require('chalk');
 
 const Select    = require('./lib/test/select');
 const Operators = require('./lib/infra/operators');
-const Steps     = require('./lib/read/steps');
+const Steps     = require('./lib/read/stepsReader');
 
 (async()=>{
 
