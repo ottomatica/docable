@@ -1,13 +1,27 @@
 setup:
   local: {}
   git: https://github.com/CSC-DevOps/CM
+  # Target VMs created as part of tutorial. 
+  # Some commands executed within these machines. `target=ansible-srv`
+  targets:
+    - ansible-srv: 
+        ssh foo>? how?
+    - web-srv: 
+        ssh food?
 
 
 README.md:
   steps:
     - selectAndRun: 
         select: "Create the Virtual Machine"
-        expectblock: "You should see baker create the virtual machine."
+        expectblock: "You should see baker create the virtual machine"
     - selectAndRun: "Verify that ansible was installed"
+    - selectAndRun: "Let's create another virtual machine for the web server"
+    - selectAndRun: "create a new public/private key pair"
+    - selectAndRun: "Or use a simple command"
+    - selectAndRun: 
+        select: "Inside the ansible-srv, test your connection between the servers"
+        target: "ansible-srv"
+
 
 
