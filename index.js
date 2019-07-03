@@ -5,7 +5,7 @@ const yargs = require('yargs');
 const chalk = require('chalk');
 
 const Select    = require('./lib/select');
-const Operators = require('./lib/operators');
+const Operators = require('./lib/infra/operators');
 const Steps     = require('./lib/steps');
 
 (async()=>{
