@@ -10,7 +10,8 @@ setup:
     rm -f web-srv web-srv.pub
     pushd . && cd servers/ansible-srv && baker destroy && popd
     pushd . && cd servers/web-srv && baker destroy && popd
-    
+  verify: |
+    opunit verify -i opunit_inventory.yml
 
 README.md:
   steps:
