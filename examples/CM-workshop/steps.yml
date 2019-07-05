@@ -6,6 +6,11 @@ setup:
   targets:
     - baker: servers/ansible-srv
     - baker: servers/web-srv
+  clean: |
+    rm -f web-srv web-srv.pub
+    pushd . && cd servers/ansible-srv && baker destroy && popd
+    pushd . && cd servers/web-srv && baker destroy && popd
+    
 
 README.md:
   steps:

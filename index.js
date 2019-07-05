@@ -33,7 +33,7 @@ async function testreport(mode, argv, options = {rendered: undefined, selector: 
     // documents and associated steps; connector to infrastructure provider
     let stepper = new Steps(options.renderer, options.selector, options.css);
 
-    let {docs, conn, cwd, targets} = await stepper.read(argv.stepfile);
+    let {docs, conn, cwd, targets, clean} = await stepper.read(argv.stepfile);
 
     console.log(`Using cwd ${cwd}`);
     let op = new Operators(conn, cwd,targets);
@@ -66,7 +66,10 @@ async function testreport(mode, argv, options = {rendered: undefined, selector: 
     }
     
     // Close spawned processes
+    console.log('cleaning up...');
     await op.tearDown(targets);
+    await op.run(clean);
+    
 
     let exitCode = 0;
     if(results.filter(result => result.status == false).length > 0) exitCode = 1;
