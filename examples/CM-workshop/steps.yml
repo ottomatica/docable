@@ -23,6 +23,9 @@ README.md:
       target: "ansible-srv"
     - selectAsFile: edit the inventory file to include the ip address, user, and path to the private key => inventory
       target: ansible-srv
-
+    - selectAndRun: 
+        select: "Now, run the ping test to verify ansible is able to talk to the web-srv"
+        expectblock: "Now, we should see a successful connection"
+      target: "ansible-srv"
 
 
