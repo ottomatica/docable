@@ -57,18 +57,22 @@ async function testreport(mode, argv, options = {rendered: undefined, selector: 
             let result = await stepFn(engine, sl);
             results.push(result);
         }
-        if( mode == "report")
-        {
-            let reportHtml = path.join(results_dir, path.basename(doc.file, '.md') + '.html');
-            fs.writeFileSync(reportHtml, engine.html())
-            console.log(`Generated report ${reportHtml}`);
-        }
     }
 
     // Run custom verify steps if any
     if (verify) {
         let verifyOut = await op.run(verify);
         console.log(chalk`{${verifyOut.exitCode == 0 ? 'green' : 'red'} ${verifyOut.stdout + '\n' + verifyOut.stderr}}`);
+
+        for(const doc of docs)  {
+            doc.engine('body').append(`<div class="verify ${verifyOut.exitCode == 0 ? 'passing' : 'failing'}">$ ${verify}\n${verifyOut.stdout}\n${verifyOut.stderr}</div>`);
+            if( mode == "report")
+            {
+                let reportHtml = path.join(results_dir, path.basename(doc.file, '.md') + '.html');
+                fs.writeFileSync(reportHtml, doc.engine.html())
+                console.log(`Generated report ${reportHtml}`);
+            }
+        }
     }
     
     // Close spawned processes
