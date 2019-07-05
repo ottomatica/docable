@@ -4,11 +4,8 @@ setup:
   # Target VMs created as part of tutorial. 
   # Some commands executed within these machines. `target=ansible-srv`
   targets:
-    - ansible-srv: 
-        ssh foo>? how?
-    - web-srv: 
-        ssh food?
-
+    - baker: servers/ansible-srv
+    - baker: servers/web-srv
 
 README.md:
   steps:
@@ -19,9 +16,11 @@ README.md:
     - selectAndRun: "Let's create another virtual machine for the web server"
     - selectAndRun: "create a new public/private key pair"
     - selectAndRun: "Or use a simple command"
-    - selectAndRun: 
-        select: "Inside the ansible-srv, test your connection between the servers"
-        target: "ansible-srv"
-
+    - selectAndRun: "You may consider running this simple command to update the public key entry"
+    #- selectAndRun: "Inside the ansible-srv, test your connection between the servers"
+    #  target: "ansible-srv"
+    - selectAndRun: "For example, when you run this command"
+      target: "ansible-srv"
+ 
 
 

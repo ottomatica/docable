@@ -33,10 +33,10 @@ async function testreport(mode, argv, options = {rendered: undefined, selector: 
     // documents and associated steps; connector to infrastructure provider
     let stepper = new Steps(options.renderer, options.selector, options.css);
 
-    let {docs, conn, cwd} = await stepper.read(argv.stepfile);
+    let {docs, conn, cwd, targets} = await stepper.read(argv.stepfile);
 
     console.log(`Using cwd ${cwd}`);
-    let op = new Operators(conn, cwd);
+    let op = new Operators(conn, cwd,targets);
     let sl = new Select( op );
 
     console.log(chalk`{bold \nRunning documentation tests:\n}`)
@@ -66,7 +66,7 @@ async function testreport(mode, argv, options = {rendered: undefined, selector: 
     }
     
     // Close spawned processes
-    await op.tearDown();
+    await op.tearDown(targets);
 
     let exitCode = 0;
     if(results.filter(result => result.status == false).length > 0) exitCode = 1;
