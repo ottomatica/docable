@@ -61,7 +61,7 @@ async function testreport(mode, argv, options = {rendered: undefined, selector: 
         if (verify) {
             verifyOut = await op.run(verify);
             console.log(chalk`{${verifyOut.exitCode == 0 ? 'green' : 'red'} ${verifyOut.stdout + '\n' + verifyOut.stderr}}`);
-            doc.engine('body').append(`<div class="verify ${verifyOut.exitCode == 0 ? 'passing' : 'failing'}">$ ${verify}\n${verifyOut.stdout}\n${verifyOut.stderr}</div>`);
+            doc.engine('body').append(`<h2>docable verification results</h2><div class="verify ${verifyOut.exitCode == 0 ? 'passing' : 'failing'}">$ ${verify}\n${verifyOut.stdout}\n${verifyOut.stderr}</div>`);
         }
 
         if (mode == "report") {
