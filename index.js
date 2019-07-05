@@ -33,7 +33,7 @@ async function testreport(mode, argv, options = {rendered: undefined, selector: 
     // documents and associated steps; connector to infrastructure provider
     let stepper = new Steps(options.renderer, options.selector, options.css);
 
-    let {docs, conn, cwd, targets, clean} = await stepper.read(argv.stepfile);
+    let {docs, conn, cwd, targets, clean, verify} = await stepper.read(argv.stepfile);
 
     console.log(`Using cwd ${cwd}`);
     let op = new Operators(conn, cwd,targets);
@@ -63,6 +63,12 @@ async function testreport(mode, argv, options = {rendered: undefined, selector: 
             fs.writeFileSync(reportHtml, engine.html())
             console.log(`Generated report ${reportHtml}`);
         }
+    }
+
+    // Run custom verify steps if any
+    if (verify) {
+        let verifyOut = await op.run(verify);
+        console.log(chalk`{${verifyOut.exitCode == 0 ? 'green' : 'red'} ${verifyOut.stdout + '\n' + verifyOut.stderr}}`);
     }
     
     // Close spawned processes
