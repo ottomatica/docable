@@ -21,6 +21,8 @@ README.md:
     #  target: "ansible-srv"
     - selectAndRun: "For example, when you run this command"
       target: "ansible-srv"
- 
+    - selectAsFile: edit the inventory file to include the ip address, user, and path to the private key => inventory
+      target: ansible-srv
+
 
 
