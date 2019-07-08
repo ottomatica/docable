@@ -33,5 +33,9 @@ README.md:
         select: "Now, run the ping test to verify ansible is able to talk to the web-srv"
         expectblock: "Now, we should see a successful connection"
       target: "ansible-srv"
+    - selectAsFile: "we can add a new variable for all entries in our `web` group"
+      insertafter: 
+      target: "ansible-srv"
+      
 
 
