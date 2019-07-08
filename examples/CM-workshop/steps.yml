@@ -27,11 +27,13 @@ README.md:
     #  target: "ansible-srv"
     - selectAndRun: "For example, when you run this command"
       target: "ansible-srv"
+    - selectAndRun: "From your ansible-srv, create a file by executing the command below on the remote server"
+      target: "web-srv"
     - selectAsFile: edit the inventory file to include the ip address, user, and path to the private key => inventory
       target: ansible-srv
     - selectAndRun: 
         select: "Now, run the ping test to verify ansible is able to talk to the web-srv"
         expectblock: "Now, we should see a successful connection"
       target: "ansible-srv"
-
-
+    - selectAndRun: "Let's install a web server, called nginx (say like engine-X), on the web-srv VM"
+      target: "ansible-srv"
