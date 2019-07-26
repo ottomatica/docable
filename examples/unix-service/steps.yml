@@ -3,6 +3,9 @@ setup:
   # slim:
   #  image: ubuntu16.04-php
   #  provider: kvm
+  # ssh: 
+  #   host: vagrant@127.0.0.1:2003
+  #   privateKey: baker_rsa
 
 unix-service.md:
   steps:
