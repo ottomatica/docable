@@ -28,7 +28,7 @@ const Steps     = require('./lib/read/stepsReader');
 
 })();
 
-async function testreport(mode, argv, options = {rendered: undefined, selector: undefined, css: undefined})
+async function testreport(mode, argv, options = {rendered: undefined, selector: undefined, css: undefined, textSelector: undefined})
 {
     // documents and associated steps; connector to infrastructure provider
     let stepper = new Steps(options.renderer, options.selector, options.css);
@@ -37,7 +37,7 @@ async function testreport(mode, argv, options = {rendered: undefined, selector: 
 
     console.log(`Using cwd ${cwd}`);
     let op = new Operators(conn, cwd,targets);
-    let sl = new Select( op );
+    let sl = new Select( op, options.textSelector );
 
     console.log(chalk`{bold \nRunning documentation tests:\n}`)
 
