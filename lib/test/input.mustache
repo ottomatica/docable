@@ -1,0 +1,22 @@
+#!/usr/bin/expect --
+set timeout -1
+#exp_internal 1
+
+spawn {{{cmd}}}
+#exp_internal -f file 0
+#log_user 1
+#puts "$expect_out(1,string)"
+#log_file -noappend typescript
+
+# foreach {pid spawnid os_error_flag value} [wait] break
+
+expect {
+    {{#prompts}}
+    "{{prompt}}" {
+        send -- "{{answer}}\r"
+        exp_continue
+    }
+    {{/prompts}}
+    interact
+eof
+}
