@@ -32,9 +32,10 @@ const Steps     = require('./lib/read/stepsReader');
 })();
 
 async function notebook(argv) {
+    const notebookPath = argv.notebook.startsWith('/') ? argv.notebook : path.join(process.cwd(), argv.notebook);
     let notebook;
     try {
-        notebook = await fs.promises.readFile(path.join(process.cwd(), argv.notebook))
+        notebook = await fs.promises.readFile(notebookPath)
     }
     catch (err) {
         console.error('Error:', err);
@@ -73,7 +74,7 @@ async function notebook(argv) {
 
     }
 
-    await fs.promises.writeFile(path.join(process.cwd(), path.dirname(argv.notebook), 'notebook_results.html'), $.html(), { encoding: 'utf-8' });
+    await fs.promises.writeFile(path.join(path.dirname(notebookPath), 'notebook_results.html'), $.html(), { encoding: 'utf-8' });
 }
 
 async function testreport(mode, argv, options = {rendered: undefined, selector: undefined, css: undefined, textSelector: undefined})
