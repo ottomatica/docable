@@ -22,11 +22,59 @@ const Steps     = require('./lib/read/stepsReader');
 
     });
 
+    yargs.command('notebook <notebook>', 'Test notebook html and report feedback into rendered output', (yargs) => { }, async (argv) => {
+        await notebook(argv);
+    });
 
     // Turn on help and access argv
     yargs.help().argv;
 
 })();
+
+async function notebook(argv) {
+    let notebook;
+    try {
+        notebook = await fs.promises.readFile(path.join(process.cwd(), argv.notebook))
+    }
+    catch (err) {
+        console.error('Error:', err);
+        process.exit(1);
+    }
+
+    let stepper = new Steps();
+    let { conn, cells, $ } = await stepper.readNotebook(notebook);
+    const cwd = process.cwd();
+
+    const op = new Operators(conn, '.');
+
+    for (const cell of cells) {
+        let result;
+        switch (cell.type) {
+            case 'file':
+                result = await op.file(cell.content, cell.path, cell.user);
+                break;
+            case 'command':
+                result = await op.run(cell.content, cell.user, cell.persistent);
+                break;
+            default:
+                break;
+        }
+
+        console.log('results:', result);
+
+        if (result.exitCode === 0) {
+            result.status = true;
+            stepper._setResults($(cell.elem).parent('pre'), result);
+        }
+        else {
+            result.status = false;
+            stepper._setResults($(cell.elem).parent('pre'), result);
+        }
+
+    }
+
+    await fs.promises.writeFile(path.join(process.cwd(), path.dirname(argv.notebook), 'notebook_results.html'), $.html(), { encoding: 'utf-8' });
+}
 
 async function testreport(mode, argv, options = {rendered: undefined, selector: undefined, css: undefined, textSelector: undefined})
 {
