@@ -23,6 +23,23 @@ const Reporter = require('./lib/read/reporter');
             }
         });
 
+    yargs.command('run <doc> [html]', 'Execute markdown/steps file', 
+        (yargs) => {
+            yargs.positional('html', {
+                describe: 'html file to execute'
+            })        
+        }, 
+        async (argv) => {
+            await docable(argv, false);
+        })
+        .option({
+            output: {
+                alias: 'o',
+                describe: 'output report path',
+                type: 'string'
+            }
+        });
+
     // Turn on help and access argv
     yargs.help().argv;
 
