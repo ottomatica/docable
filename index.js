@@ -18,13 +18,14 @@ const Reporter = require('./lib/read/reporter');
 async function docable(argv, report) {
     let stepper = new Stepper(argv.doc, argv.html);
     await stepper.setup();
-    const { $, results } = await stepper.run();
+    const { $, results, status } = await stepper.run();
 
     if (report) {
         const reporter = new Reporter($, results);
-        let docStatus = await reporter.report();
-        process.exitCode = docStatus ? 0 : 1;
+        await reporter.report();
     }
+
+    process.exitCode = status ? 0 : 1;
 
     // TODO:
     // await stepper.tearDown();
