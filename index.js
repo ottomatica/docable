@@ -17,7 +17,7 @@ const Reporter = require('./lib/read/reporter');
 
 async function docable(argv, report) {
     let stepper = new Stepper(argv.doc, argv.html);
-    await stepper.setup(argv.doc, argv.html);
+    await stepper.setup();
     const { $, results } = await stepper.run();
 
     if (report) {
