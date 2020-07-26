@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 const yargs = require('yargs');
+const path = require('path')
 
 const Stepper = require('./lib/read/stepper');
 const Reporter = require('./lib/read/reporter');
@@ -46,7 +47,7 @@ const Reporter = require('./lib/read/reporter');
 })();
 
 async function docable(argv, report) {
-    let stepper = new Stepper(argv.doc, argv.html);
+    let stepper = new Stepper(path.resolve(argv.doc), argv.html ? path.resolve(argv.html) : undefined);
     await stepper.setup();
     const { $, results, status } = await stepper.run();
 
