@@ -1,0 +1,4 @@
+url:https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rvm-on-ubuntu-18-04:
+  steps:
+    - select: associated latest stable release of Ruby
+      type: command
