@@ -1,6 +1,6 @@
 {
   "name": "docable",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "CI for documentation. Running documentation.",
   "bin": "index.js",
   "main": "index.js",
