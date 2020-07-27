@@ -20,6 +20,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: Install bakerx
+      run: sudo npm install -g ottomatica/bakerx
     - name: Install dependencies
       run: npm i
     - name: Run tests
