@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 const yargs = require('yargs');
 const path = require('path')
+const chalk = require('chalk');
 
 const Stepper = require('./lib/read/stepper');
 const Reporter = require('./lib/read/reporter');
@@ -46,10 +47,26 @@ const Reporter = require('./lib/read/reporter');
 
 })();
 
-async function docable(argv, report) {
+async function docable(argv, report, verbose = true) {
     let stepper = new Stepper(path.resolve(argv.doc), argv.html ? path.resolve(argv.html) : undefined);
     await stepper.setup();
     const { $, results, status } = await stepper.run();
+
+    // print execution results in console
+    if (verbose) {
+        for (const r of results) {
+            // print task result
+            console.log(chalk`{${r.result.status ? 'green' : 'red'} ${JSON.stringify({ ...r.result, status: undefined }, null, 2)}}`);
+        }
+
+        const passingCount = results.filter(r => r.status).length;
+        const failingCount = results.filter(r => !r.status).length;
+        const summaryColor = failingCount > 0 ? 'red' : 'green';
+
+        // print summary of tasks
+        console.log(chalk`{${summaryColor} \nSummary: ${Number((passingCount / results.length).toFixed(1))}% of all tasks passed.} ` +
+            chalk`{${summaryColor} ${passingCount} passed - ${failingCount} failed.}`);
+    }
 
     if (report) {
         const reporter = new Reporter($, results);
