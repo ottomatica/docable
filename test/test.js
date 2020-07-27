@@ -50,7 +50,7 @@ describe('Running basic commands [bakerx/ssh]', () => {
         let result = spawnSync('node index.js report test/resources/commands/ssh-command.yml', { shell:true });
 
         expect(result.error).toBeUndefined();
-        expect(result.exitcode).toEqual(0);
+        expect(result.exitCode).toEqual(0);
     });
 
 
