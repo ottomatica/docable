@@ -3,5 +3,5 @@ setup:
 
 url:https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-with-rvm-on-ubuntu-18-04:
   steps:
-    - select: request a key associated with the given ID
+    - select: Putting all of these elements together, our full command will look like this
       type: command
