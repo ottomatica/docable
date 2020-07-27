@@ -54,11 +54,6 @@ async function docable(argv, report, verbose = true) {
 
     // print execution results in console
     if (verbose) {
-        for (const r of results) {
-            // print task result
-            console.log(chalk`{${r.result.status ? 'green' : 'red'} ${JSON.stringify({ ...r.result, status: undefined }, null, 2)}}`);
-        }
-
         const passingCount = results.filter(r => r.status).length;
         const failingCount = results.filter(r => !r.status).length;
         const summaryColor = failingCount > 0 ? 'red' : 'green';
