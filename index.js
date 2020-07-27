@@ -54,12 +54,12 @@ async function docable(argv, report, verbose = true) {
 
     // print execution results in console
     if (verbose) {
-        const passingCount = results.filter(r => r.status).length;
-        const failingCount = results.filter(r => !r.status).length;
+        const passingCount = results.filter(r => r.result.status).length;
+        const failingCount = results.filter(r => !r.result.status).length;
         const summaryColor = failingCount > 0 ? 'red' : 'green';
 
         // print summary of tasks
-        console.log(chalk`{${summaryColor} \nSummary: ${Number((passingCount / results.length).toFixed(1))}% of all tasks passed.} ` +
+        console.log(chalk`{${summaryColor} \nSummary: ${Number((100 * passingCount / results.length).toFixed(1))}% of all tasks passed.} ` +
             chalk`{${summaryColor} ${passingCount} passed - ${failingCount} failed.}`);
     }
 
