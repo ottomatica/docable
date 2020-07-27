@@ -1,135 +1,79 @@
 #! /usr/bin/env node
-const path  = require('path');
-const fs    = require('fs');
 const yargs = require('yargs');
+const path = require('path')
 const chalk = require('chalk');
 
-const Select    = require('./lib/test/select');
-const Operators = require('./lib/infra/operators');
-const Steps     = require('./lib/read/stepsReader');
+const Stepper = require('./lib/read/stepper');
+const Reporter = require('./lib/read/reporter');
 
-(async()=>{
+(async () => {
 
-    yargs.command('test <stepfile>', 'Test markdown file', (yargs) => { }, async (argv) => {
+    yargs.command('report <doc> [html]', 'Test markdown/steps file and report feedback into rendered output', 
+        (yargs) => {
+            yargs.positional('html', {
+                describe: 'html file to execute'
+            })        
+        }, 
+        async (argv) => {
+            await docable(argv, true);
+        })
+        .option({
+            output: {
+                alias: 'o',
+                describe: 'output report path',
+                type: 'string'
+            }
+        });
 
-        await testreport("test", argv);
-
-    });
-
-    yargs.command('report <stepfile>', 'Test markdown file and report feedback into rendered output', (yargs) => { }, async (argv) => {
-
-        await testreport("report", argv);
-
-    });
-
-    yargs.command('notebook <notebook>', 'Test notebook html and report feedback into rendered output', (yargs) => { }, async (argv) => {
-        await notebook(argv);
-    });
+    yargs.command('run <doc> [html]', 'Execute markdown/steps file', 
+        (yargs) => {
+            yargs.positional('html', {
+                describe: 'html file to execute'
+            })        
+        }, 
+        async (argv) => {
+            await docable(argv, false);
+        })
+        .option({
+            output: {
+                alias: 'o',
+                describe: 'output report path',
+                type: 'string'
+            }
+        });
 
     // Turn on help and access argv
     yargs.help().argv;
 
 })();
 
-async function notebook(argv) {
-    const notebookPath = argv.notebook.startsWith('/') ? argv.notebook : path.join(process.cwd(), argv.notebook);
-    let notebook;
-    try {
-        notebook = await fs.promises.readFile(notebookPath)
-    }
-    catch (err) {
-        console.error('Error:', err);
-        process.exit(1);
-    }
+async function docable(argv, report, verbose = true) {
+    let stepper = new Stepper(path.resolve(argv.doc), argv.html ? path.resolve(argv.html) : undefined);
+    await stepper.setup();
+    const { $, results, status } = await stepper.run();
 
-    let stepper = new Steps();
-    let { conn, cells, $ } = await stepper.readNotebook(notebook);
-    const cwd = process.cwd();
+    // print execution results in console
+    if (verbose) {
+        const passingCount = results.filter(r => r.result.status).length;
+        const failingCount = results.filter(r => !r.result.status).length;
+        const summaryColor = failingCount > 0 ? 'red' : 'green';
 
-    const op = new Operators(conn, '.');
-
-    for (const cell of cells) {
-        let result;
-        switch (cell.type) {
-            case 'file':
-                result = await op.file(cell.content, cell.path, cell.user);
-                break;
-            case 'command':
-                result = await op.run(cell.content, cell.user, cell.persistent);
-                break;
-            default:
-                break;
-        }
-
-        console.log('results:', result);
-
-        if (result.exitCode === 0) {
-            result.status = true;
-            stepper._setResults($(cell.elem).parent('pre'), result);
-        }
-        else {
-            result.status = false;
-            stepper._setResults($(cell.elem).parent('pre'), result);
-        }
-
+        // print summary of tasks
+        console.log(chalk`{${summaryColor} \nSummary: ${Number((100 * passingCount / results.length).toFixed(1))}% of all tasks passed.} ` +
+            chalk`{${summaryColor} ${passingCount} passed - ${failingCount} failed.}`);
     }
 
-    await fs.promises.writeFile(path.join(path.dirname(notebookPath), 'notebook_results.html'), $.html(), { encoding: 'utf-8' });
+    if (report) {
+        const reporter = new Reporter($, results);
+        await reporter.report(argv.output);
+    }
+
+    process.exitCode = status ? 0 : 1;
+
+    // TODO:
+    // await stepper.tearDown();
+
+    return results;
 }
 
-async function testreport(mode, argv, options = {rendered: undefined, selector: undefined, css: undefined, textSelector: undefined})
-{
-    // documents and associated steps; connector to infrastructure provider
-    let stepper = new Steps(options.renderer, options.selector, options.css);
-
-    let {docs, conn, cwd, targets, clean, verify} = await stepper.read(argv.stepfile);
-
-    console.log(`Using cwd ${cwd}`);
-    let op = new Operators(conn, cwd,targets);
-    let sl = new Select( op, options.textSelector );
-
-    console.log(chalk`{bold \nRunning documentation tests:\n}`)
-
-    // Select/translate/perform/assert workflow
-    
-    let results_dir = path.join(path.dirname(argv.stepfile), 'docable_results');
-    if (!fs.existsSync(results_dir)) {
-        fs.mkdirSync(results_dir);
-    }
-
-    let results = [];
-    for( let doc of docs )
-    {
-        let engine = doc.engine;
-        for( let stepFn of doc.steps )
-        {
-            let result = await stepFn(engine, sl);
-            results.push(result);
-        }
-
-        if (verify) {
-            verifyOut = await op.run(verify);
-            console.log(chalk`{${verifyOut.exitCode == 0 ? 'green' : 'red'} ${verifyOut.stdout + '\n' + verifyOut.stderr}}`);
-            doc.engine('body').append(`<h2>docable verification results</h2><div class="verify ${verifyOut.exitCode == 0 ? 'passing' : 'failing'}">$ ${verify}\n${verifyOut.stdout}\n${verifyOut.stderr}</div>`);
-        }
-
-        if (mode == "report") {
-            let reportHtml = path.join(results_dir, path.basename(doc.file, '.md') + '.html');
-            fs.writeFileSync(reportHtml, doc.engine.html())
-            console.log(`Generated report ${reportHtml}`);
-        }
-    }
-
-    // Close spawned processes
-    console.log('cleaning up...');
-    await op.tearDown(targets);
-    await op.run(clean);
-    
-
-    let exitCode = 0;
-    if(results.filter(result => result.status == false).length > 0) exitCode = 1;
-
-    process.exit(exitCode);
-}
-
-module.exports = testreport;
+module.exports = docable;
