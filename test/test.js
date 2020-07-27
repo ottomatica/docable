@@ -2,7 +2,7 @@ const { assert } = require('console');
 
 const spawnSync = require('child_process').spawnSync;
 
-describe('Running basic commands', () => {
+describe('Running basic commands [inline]', () => {
 
     test('Should be able to run a simple command', () => {
         let result = spawnSync('node index.js report test/resources/commands/command.md', { shell:true });
