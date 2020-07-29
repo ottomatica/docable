@@ -32,7 +32,7 @@
     "md5": "^2.2.1",
     "mustache": "^4.0.1",
     "simple-git": "^2.15.0",
-    "uuid": "^8.2.0",
+    "uuid": "^8.3.0",
     "yargs": "^15.4.1"
   },
   "devDependencies": {

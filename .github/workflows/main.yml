@@ -22,6 +22,8 @@ jobs:
 
     - name: Install bakerx
       run: sudo npm install -g ottomatica/bakerx
+    - name: Ensure we have base image.
+      run: bakerx pull ottomatica/bakerx#images bionic-node
     - name: Install dependencies
       run: npm i
     - name: Run tests
