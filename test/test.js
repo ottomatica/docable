@@ -12,7 +12,6 @@ describe('Running basic commands [inline]', () => {
         expect(result.stderr.toString()).toHaveLength(0);
     });
 
-
     test('Should fail on bad commands in pipes', () => {
         let result = spawnSync('node index.js report test/resources/commands/badpipe.md', { shell:true });
 
@@ -26,6 +25,14 @@ describe('Running basic commands [inline]', () => {
         expect(result.error).toBeUndefined();
         expect(result.stdout.toString()).toMatch('docable');
     });
+
+    test('Should set success based on failed_when expression', () => {
+        let result = spawnSync('node index.js report test/resources/commands/failedWhen.md', { shell:true });
+
+        expect(result.error).toBeUndefined();
+        expect(result.stderr.toString()).toHaveLength(0);
+    });
+
 });
 
 describe('Running basic commands [bakerx/ssh]', () => {
