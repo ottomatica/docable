@@ -20,12 +20,20 @@ describe('Running basic commands [inline]', () => {
         expect(result.stderr.toString()).not.toHaveLength(0);
     });
 
+    test('Should fail with fail_when condition', () => {
+        let result = spawnSync('node index.js report test/resources/commands/fail_when.md', { shell:true });
+
+        expect(result.error).toBeUndefined();
+        expect(result.status).not.toEqual(0);
+    });
+
     test('Should create simple file with content', () => {
         let result = spawnSync('node index.js report test/resources/commands/file.md', { shell:true });
 
         expect(result.error).toBeUndefined();
         expect(result.stdout.toString()).toMatch('docable');
     });
+
 });
 
 describe('Running basic commands [bakerx/ssh]', () => {
