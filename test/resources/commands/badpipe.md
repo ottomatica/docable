@@ -7,6 +7,6 @@ setup:
 
 We should expect this to be detected as a failure.
 
-```bash|type=command
+```bash|{type:'command'}
 foocommand | echo "hello"
 ```
