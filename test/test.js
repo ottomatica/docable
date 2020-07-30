@@ -12,7 +12,6 @@ describe('Running basic commands [inline]', () => {
         expect(result.stderr.toString()).toHaveLength(0);
     });
 
-
     test('Should fail on bad commands in pipes', () => {
         let result = spawnSync('node index.js report test/resources/commands/badpipe.md', { shell:true });
 
@@ -21,7 +20,7 @@ describe('Running basic commands [inline]', () => {
     });
 
     test('Should fail with fail_when condition', () => {
-        let result = spawnSync('node index.js report test/resources/commands/fail_when.md', { shell:true });
+        let result = spawnSync('node index.js report test/resources/commands/failedWhen.md', { shell:true });
 
         expect(result.error).toBeUndefined();
         expect(result.status).not.toEqual(0);
@@ -36,45 +35,29 @@ describe('Running basic commands [inline]', () => {
 
 });
 
-describe('Running basic commands [bakerx/ssh]', () => {
+// describe('Running basic commands [bakerx/ssh]', () => {
 
-    const HOST = '192.168.99.10';
-    let sshConfig = null;
-    beforeAll(() => {
-        execSync(`bakerx run docable-vm-test bionic-node --ip ${HOST} --memory 1024`, {stdio: 'inherit'});
+//     const HOST = '192.168.99.10';
+//     let sshConfig = null;
+//     beforeAll(() => {
+//         execSync(`bakerx run docable-vm-test bionic-node --ip ${HOST} --memory 1024`, {stdio: 'inherit'});
 
-        sshConfig = JSON.parse(execSync(`bakerx ssh-info docable-vm-test --format json`).toString().trim());
-    })
+//         sshConfig = JSON.parse(execSync(`bakerx ssh-info docable-vm-test --format json`).toString().trim());
+//     })
 
-    afterAll(() => {
-        // delete test vm
-        execSync('bakerx delete vm docable-vm-test');
+//     afterAll(() => {
+//         // delete test vm
+//         execSync('bakerx delete vm docable-vm-test');
         
-        // // delete test files
-        // execSync('rm /tmp/foo /tmp/foo.json /tmp/foo.yml /tmp/app.js');
-    });
-
-    test('Should be able to run a simple command', () => {
-        let result = spawnSync('node index.js report test/resources/commands/ssh-command.yml', { shell:true });
-
-        expect(result.error).toBeUndefined();
-        expect(result.status).toEqual(0);
-    });
-
-
-//     test('Should fail on bad commands in pipes', () => {
-//         let result = spawnSync('node index.js report test/resources/commands/badpipe.yml', { shell:true });
-
-//         expect(result.error).toBeUndefined();
-//         expect(result.stderr.toString()).not.toHaveLength(0);
+//         // // delete test files
+//         // execSync('rm /tmp/foo /tmp/foo.json /tmp/foo.yml /tmp/app.js');
 //     });
 
-//     test('Should create simple file with content', () => {
-//         let result = spawnSync('node index.js report test/resources/commands/file.yml', { shell:true });
+//     test('Should be able to run a simple command', () => {
+//         let result = spawnSync('node index.js report test/resources/commands/ssh-command.yml', { shell:true });
 
 //         expect(result.error).toBeUndefined();
-//         expect(result.stdout.toString()).toMatch('docable');
+//         expect(result.status).toEqual(0);
 //     });
-
-});
+// });
 
