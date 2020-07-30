@@ -6,6 +6,8 @@ const chalk = require('chalk');
 const Stepper = require('./lib/read/stepper');
 const Reporter = require('./lib/read/reporter');
 
+const transformers = require('./lib/transformers');
+
 (async () => {
 
     yargs.command('report <doc> [html]', 'Test markdown/steps file and report feedback into rendered output', 
@@ -76,4 +78,4 @@ async function docable(argv, report, verbose = true) {
     return results;
 }
 
-module.exports = docable;
+module.exports = {docable, transformers};
