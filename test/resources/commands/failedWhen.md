@@ -5,7 +5,7 @@ setup:
 
 # Failed_when
 
-We expect this to pass as a failure is defined to happen when `exitCode==0` while it fails with exitCode 127.
+Although exit code 0 indicates success, we expect this to fail because a failure is defined to happen when `exitCode==0`.
 
 Ensure fails.
 ```bash|{type:'command',failed_when:'exitCode==0'}
