@@ -33,6 +33,15 @@ describe('Running basic commands [inline]', () => {
         expect(result.stdout.toString()).toMatch('docable');
     });
 
+    test('Should apply edit to file', () => {
+        let result = spawnSync('node index.js report test/resources/commands/diff.md', { shell:true });
+
+        expect(result.error).toBeUndefined();
+        expect(result.stderr.toString()).toHaveLength(0);
+        expect(result.status).toEqual(0);
+
+    });
+
 });
 
 describe('Running basic commands [bakerx/ssh]', () => {
