@@ -1,4 +1,5 @@
 const { assert } = require('console');
+const fs = require('fs');
 
 const spawnSync = require('child_process').spawnSync;
 const execSync = require('child_process').execSync;
@@ -39,6 +40,19 @@ describe('Running basic commands [inline]', () => {
         expect(result.error).toBeUndefined();
         expect(result.stderr.toString()).toHaveLength(0);
         expect(result.status).toEqual(0);
+
+    });
+});
+
+describe('Running edge cases', () => {
+
+    // https://github.com/ottomatica/docable/issues/13
+    test('Should be able to select text with inline code', async () => {
+
+        let result = spawnSync('node index.js report test/resources/commands/select-with-inline.yml', { shell:true });
+
+        let content = await fs.promises.readFile('/tmp/inline-select-test.txt');
+        expect(content.toString()).toMatch('jekyll serve');
 
     });
 

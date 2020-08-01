@@ -1,0 +1,8 @@
+setup:
+    local: {}
+  
+url:https://www.digitalocean.com/community/tutorials/how-to-set-up-a-jekyll-development-site-on-ubuntu-18-04:
+  steps:
+    - select: If you are working on a local machine, you can run jekyll serve  without the host setting and connect with http://localhost:4000.
+      type: file
+      path: /tmp/inline-select-test.txt
