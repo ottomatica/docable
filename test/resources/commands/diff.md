@@ -11,10 +11,6 @@ OTHER=NONE
 Set the ip address.
 
 ```diff|{type: 'edit', path:'/tmp/config.ini'}
-Index: config.ini
-===================================================================
---- config.ini  information
-+++ config.ini
 @@ -1,2 +1,2 @@
 -IP=<fill in>
 +IP=192.168.33.10
