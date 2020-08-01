@@ -5,6 +5,13 @@ const os = require('os');
 const spawnSync = require('child_process').spawnSync;
 const execSync = require('child_process').execSync;
 
+
+function tmpdir()
+{
+    if( os.platform()=='win32') return os.tmpdir();
+    return '/tmp';    
+}
+
 describe('Running basic commands [inline]', () => {
 
     test('Should be able to run a simple command', () => {
@@ -52,7 +59,7 @@ describe('Running edge cases', () => {
 
         let result = spawnSync('node index.js report test/resources/commands/select-with-inline.yml', { shell:true });
 
-        let content = await fs.promises.readFile(`${os.tmpdir()}/inline-select-test.txt`);
+        let content = await fs.promises.readFile(`${tmpdir()}/inline-select-test.txt`);
         expect(content.toString()).toMatch('jekyll serve');
 
     });
