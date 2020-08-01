@@ -1,5 +1,6 @@
 const { assert } = require('console');
 const fs = require('fs');
+const os = require('os');
 
 const spawnSync = require('child_process').spawnSync;
 const execSync = require('child_process').execSync;
@@ -51,7 +52,7 @@ describe('Running edge cases', () => {
 
         let result = spawnSync('node index.js report test/resources/commands/select-with-inline.yml', { shell:true });
 
-        let content = await fs.promises.readFile('/tmp/inline-select-test.txt');
+        let content = await fs.promises.readFile(`${os.tmpdir()}/inline-select-test.txt`);
         expect(content.toString()).toMatch('jekyll serve');
 
     });
