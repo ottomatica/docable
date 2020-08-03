@@ -52,7 +52,7 @@ const transformers = require('./lib/transformers');
 async function docable(argv, report, verbose = true) {
     let stepper = new Stepper(path.resolve(argv.doc), argv.html ? path.resolve(argv.html) : undefined);
     await stepper.setup();
-    const { $, results, status } = await stepper.run();
+    const { $, results, status } = await stepper.run(argv.stepIndex);
 
     // print execution results in console
     if (verbose) {
