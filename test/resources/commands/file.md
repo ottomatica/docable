@@ -1,7 +1,7 @@
 
-# Simple command
+# Working with files
 
-List the current directory contents.
+Create file with content.
 
 ```bash|{type:'file',path:'/tmp/docable_file'}
 hello 
