@@ -66,6 +66,18 @@ describe('Running edge cases', () => {
 
 });
 
+describe('Running basic commands [docker]', () => {
+
+    test('Run a simple command', async () => {
+
+        let result = spawnSync('node index.js report test/resources/docker/command.md', { shell:true });
+
+        expect(result.error).toBeUndefined();
+        expect(result.status).toEqual(0);
+    });
+
+});
+
 describe('Running basic commands [bakerx/ssh]', () => {
 
     const HOST = '192.168.99.10';
