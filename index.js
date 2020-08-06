@@ -49,10 +49,10 @@ const transformers = require('./lib/transformers');
 
 })();
 
-async function docable(argv, report, verbose = true) {
-    let stepper = new Stepper(path.resolve(argv.doc), argv.html ? path.resolve(argv.html) : undefined);
-    await stepper.setup();
-    const { $, results, status } = await stepper.run(argv.stepIndex);
+async function docable(options, report, verbose = true) {
+    let stepper = new Stepper(path.resolve(options.doc), options.html ? path.resolve(options.html) : undefined);
+    await stepper.setup(options.setupObj);
+    const { $, results, status } = await stepper.run(options.stepIndex);
 
     // print execution results in console
     if (verbose) {
@@ -67,7 +67,7 @@ async function docable(argv, report, verbose = true) {
 
     if (report) {
         const reporter = new Reporter($, results);
-        await reporter.report(argv.output);
+        await reporter.report(options.output);
     }
 
     process.exitCode = status ? 0 : 1;
