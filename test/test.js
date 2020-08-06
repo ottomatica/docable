@@ -69,8 +69,9 @@ describe('Running edge cases', () => {
 
 describe('Running basic commands [docker]', () => {
 
+    let conn = Connector.getConnector('docker', 'docableContainer');
+
     test('Run a simple command', async () => {
-        let conn = Connector.getConnector('docker', 'docableContainer');
         await conn.pull('ubuntu:18.04', false);
         if (await conn.containerExists()) await conn.delete();
         await conn.run('ubuntu:18.04', '/bin/bash');
@@ -84,7 +85,9 @@ describe('Running basic commands [docker]', () => {
 
     }, 60000);
 
-    test('Should create simple file with content', () => {
+    test('Should create simple file with content', async () => {
+        await conn.run('ubuntu:18.04', '/bin/bash');
+
         let result = spawnSync('node index.js report test/resources/docker/file.md', { shell:true });
 
         expect(result.error).toBeUndefined();
