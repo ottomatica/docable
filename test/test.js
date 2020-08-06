@@ -84,6 +84,13 @@ describe('Running basic commands [docker]', () => {
 
     }, 60000);
 
+    test('Should create simple file with content', () => {
+        let result = spawnSync('node index.js report test/resources/docker/file.md', { shell:true });
+
+        expect(result.error).toBeUndefined();
+        expect(result.stdout.toString()).toMatch('docable');
+    });
+
 });
 
 describe('Running basic commands [bakerx/ssh]', () => {
