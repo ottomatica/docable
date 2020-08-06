@@ -71,6 +71,7 @@ describe('Running basic commands [docker]', () => {
 
     test('Run a simple command', async () => {
         let conn = Connector.getConnector('docker', 'docableContainer');
+        await conn.pull('ubuntu:18.04', false);
         if (await conn.containerExists()) await conn.delete();
         await conn.run('ubuntu:18.04', '/bin/bash');
 
@@ -81,7 +82,7 @@ describe('Running basic commands [docker]', () => {
         expect(result.error).toBeUndefined();
         expect(result.status).toEqual(0);
 
-    });
+    }, 60000);
 
 });
 
