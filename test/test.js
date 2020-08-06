@@ -1,6 +1,7 @@
 const { assert } = require('console');
 const fs = require('fs');
 const os = require('os');
+const Connector = require('infra.connectors');
 
 const spawnSync = require('child_process').spawnSync;
 const execSync = require('child_process').execSync;
@@ -69,11 +70,17 @@ describe('Running edge cases', () => {
 describe('Running basic commands [docker]', () => {
 
     test('Run a simple command', async () => {
+        let conn = Connector.getConnector('docker', 'docableContainer');
+        if (await conn.containerExists()) await conn.delete();
+        await conn.run('ubuntu:18.04', '/bin/bash');
 
-        let result = spawnSync('node index.js report test/resources/docker/command.md', { shell:true });
+        let result = spawnSync('node index.js report test/resources/docker/command.md', { shell: true });
+
+        await conn.delete();
 
         expect(result.error).toBeUndefined();
         expect(result.status).toEqual(0);
+
     });
 
 });

@@ -1,6 +1,6 @@
 <!--
 setup:
-  docker: ubuntu:18.04
+  docker: docableContainer
 -->
 
 # Simple command
