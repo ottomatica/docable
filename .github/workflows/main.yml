@@ -24,6 +24,14 @@ jobs:
       run: sudo npm install -g ottomatica/bakerx
     - name: Ensure we have base image.
       run: bakerx pull ottomatica/bakerx#images bionic-node
+    - name: Install Docker
+      run: |
+        brew install docker docker-machine
+        curl --create-dirs -Lo ~/.docker/machine/cache/boot2docker.iso https://github.com/boot2docker/boot2docker/releases/download/v19.03.12/boot2docker.iso
+        docker-machine create --driver virtualbox default
+        eval $(docker-machine env default)
+        docker run hello-world
+
     - name: Install dependencies
       run: npm i
     - name: Run tests
