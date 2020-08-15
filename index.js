@@ -78,4 +78,4 @@ async function docable(options, report, verbose = true) {
     return results;
 }
 
-module.exports = {docable, transformers};
+module.exports = {docable, transformers, Stepper};
