@@ -49,6 +49,26 @@ const transformers = require('./lib/transformers');
 
 })();
 
+async function fromHtml($, setup, cwd) {
+
+    let cells = [];
+    $('[data-docable="true"]').each(function (index, elem) {
+        cells.push({
+            index: index,
+            content: $(elem).text().trim(),
+            ...$(elem).data(),
+            elem
+        });
+    });
+
+    let stepper = new Stepper();
+    let conn = await stepper.buildConnector(setup, cwd);
+
+    /* let { results, _, status } */
+    return await stepper.runSteps( cells, $, conn, cwd, undefined);
+}
+
+
 async function docable(options, report, verbose = true) {
     let stepper = new Stepper(path.resolve(options.doc), options.html ? path.resolve(options.html) : undefined);
     await stepper.setup(options.setupObj);
@@ -78,4 +98,4 @@ async function docable(options, report, verbose = true) {
     return results;
 }
 
-module.exports = {docable, transformers, Stepper};
+module.exports = {docable, transformers, Stepper, fromHtml};
