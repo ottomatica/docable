@@ -52,7 +52,7 @@ const transformers = require('./lib/transformers');
 async function fromHtml($, setup, cwd, docDir, onProgress) {
 
     let cells = [];
-    $('[data-docable="true"]').each(function (index, elem) {
+    $('[data-type="command", data-type="file"]').each(function (index, elem) {
         cells.push({
             index: index,
             content: $(elem).text().trim(),
