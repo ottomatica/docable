@@ -49,7 +49,7 @@ const transformers = require('./lib/transformers');
 
 })();
 
-async function fromHtml($, setup, cwd, docDir, onProgress) {
+async function fromHtml($, setup, cwd, docDir, onProgress, vars) {
 
     let cells = [];
     $('[data-docable="true"]').each(function (index, elem) {
@@ -68,7 +68,7 @@ async function fromHtml($, setup, cwd, docDir, onProgress) {
     let conn = await stepper.buildConnector(setup, cwd, docDir);
 
     /* let { results, _, status } */
-    return await stepper.runSteps( cells, $, conn, cwd, undefined);
+    return await stepper.runSteps( cells, $, conn, cwd, undefined, vars);
 }
 
 
