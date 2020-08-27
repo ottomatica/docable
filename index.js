@@ -57,7 +57,8 @@ async function fromHtml($, setup, cwd, docDir, onProgress, vars) {
             index: index,
             content: $(elem).text().trim(),
             ...$(elem).data(),
-            elem
+            elem,
+            id: $(elem).attr('id')
         });
     });
 
