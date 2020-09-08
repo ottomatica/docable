@@ -90,8 +90,21 @@ describe('Running basic commands [docker]', () => {
 
         let result = spawnSync('node index.js report test/resources/docker/file.md', { shell:true });
 
+        await conn.delete();
+
         expect(result.error).toBeUndefined();
         expect(result.stdout.toString()).toMatch('docable');
+    });
+
+    test('Should perform diff on file', async () => {
+        await conn.run('ubuntu:18.04', '/bin/bash');
+
+        let result = spawnSync('node index.js report test/resources/docker/diff.md', { shell:true });
+
+        await conn.delete();
+
+        expect(result.error).toBeUndefined();
+        expect(result.stdout.toString()).toMatch('3 passed');
     });
 
 });

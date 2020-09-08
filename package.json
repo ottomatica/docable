@@ -25,7 +25,7 @@
     "chalk": "^4.1.0",
     "cheerio": "^1.0.0-rc.3",
     "diff": "^4.0.2",
-    "got": "^11.5.2",
+    "got": "^11.6.0",
     "highlight.js": "^9.18.3",
     "infra.connectors": "github:ottomatica/infra.connectors",
     "js-yaml": "^3.14.0",
@@ -33,12 +33,12 @@
     "marked": "^1.1.1",
     "md5": "^2.3.0",
     "mustache": "^4.0.1",
-    "simple-git": "^2.18.0",
+    "simple-git": "^2.20.1",
     "sudo-prompt": "^9.2.1",
     "uuid": "^8.3.0",
     "yargs": "^15.4.1"
   },
   "devDependencies": {
-    "jest": "^26.4.0"
+    "jest": "^26.4.2"
   }
 }
