@@ -104,7 +104,8 @@ describe('Running basic commands [docker]', () => {
         await conn.delete();
 
         expect(result.error).toBeUndefined();
-        expect(result.stdout.toString()).toMatch('3 passed');
+        expect(result.stderr.toString()).toHaveLength(0);
+        expect(result.status).toEqual(0);
     });
 
 });
