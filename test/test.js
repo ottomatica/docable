@@ -43,6 +43,13 @@ describe('Running basic commands [inline]', () => {
         expect(result.stdout.toString()).toMatch('docable');
     });
 
+    test('Should create simple file with content [relative]', () => {
+        let result = spawnSync('node index.js report test/resources/commands/relative_file.md', { shell:true });
+
+        expect(result.error).toBeUndefined();
+        expect(result.stdout.toString()).toMatch('docable');
+    });
+
     test('Should apply edit to file', () => {
         let result = spawnSync('node index.js report test/resources/commands/diff.md', { shell:true });
 
