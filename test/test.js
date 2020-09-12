@@ -72,6 +72,13 @@ describe('Running basic commands [inline]', () => {
         expect(result.error).toBeUndefined();
         expect(result.stderr.toString()).toHaveLength(0);
     });
+
+    test('Should be able to run command with multiple lines', () => {
+        let result = spawnSync('node index.js report test/resources/commands/multiline.md', { shell:true });
+
+        expect(result.error).toBeUndefined();
+        expect(result.stderr.toString()).toHaveLength(0);
+    });
 });
 
 describe('Running edge cases', () => {
