@@ -65,6 +65,13 @@ describe('Running basic commands [inline]', () => {
         expect(result.error).toBeUndefined();
         expect(result.stderr.toString()).toHaveLength(0);
     });
+
+    test('Should be able to spawn a command', () => {
+        let result = spawnSync('node index.js report test/resources/commands/spawn.md', { shell:true });
+
+        expect(result.error).toBeUndefined();
+        expect(result.stderr.toString()).toHaveLength(0);
+    });
 });
 
 describe('Running edge cases', () => {
