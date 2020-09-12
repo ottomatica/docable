@@ -1,4 +1,11 @@
+
+Install simple server.
+```bash|{type: 'command'}
+npm install http-server -g
+```
+
 Save the following in 'server.sh' and make it executable.
+
 
 ```bash|{type: 'file', path: 'server.sh', permission: '+x'}
 #!/bin/bash
@@ -17,13 +24,14 @@ function cleanup
 }
 
 # Initiate the trap
-trap cleanup EXIT
+trap cleanup EXIT SIGINT
 
 # Create lockfile
 touch $LOCKFILE
 
 # Simple web server (listen on port 8888)
-while true; do { echo -e "HTTP/1.1 200 OK\n\n$(date)"; } | nc -l 8888; done
+# while true; do { echo -e "HTTP/1.1 200 OK\n\n$(date)"; } | nc -l 8888; done
+http-server -p 8888
 ```
 
 This will run a simple bash server that you can send commands to over the network.
@@ -42,7 +50,7 @@ You should see your direct connects appear in your other terminal running the se
 
 
 ```bash|{type:'command'}
-ps -ax | grep server.sh
-pkill -f './server.sh'
-ps -ax | grep server.sh
+pkill -f 'http-server'; 
+echo
+ps -ax | grep http-server
 ```
