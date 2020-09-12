@@ -39,3 +39,10 @@ wget -qO- localhost:8888
 ```
 
 You should see your direct connects appear in your other terminal running the server process. If you try running `./server.sh` in another terminal, it should prevent you from running again.
+
+
+```bash|{type:'command'}
+ps -ax | grep server.sh
+pkill -f './server.sh'
+ps -ax | grep server.sh
+```
