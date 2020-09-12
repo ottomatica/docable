@@ -25,7 +25,7 @@
     "chalk": "^4.1.0",
     "cheerio": "^1.0.0-rc.3",
     "diff": "^4.0.2",
-    "got": "^11.6.1",
+    "got": "^11.6.2",
     "highlight.js": "^9.18.3",
     "infra.connectors": "github:ottomatica/infra.connectors",
     "js-yaml": "^3.14.0",

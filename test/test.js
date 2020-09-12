@@ -58,6 +58,13 @@ describe('Running basic commands [inline]', () => {
         expect(result.status).toEqual(0);
 
     });
+
+    test('Should be able to run a simple command in a shell', () => {
+        let result = spawnSync('node index.js report test/resources/commands/shells.md', { shell:true });
+
+        expect(result.error).toBeUndefined();
+        expect(result.stderr.toString()).toHaveLength(0);
+    });
 });
 
 describe('Running edge cases', () => {
