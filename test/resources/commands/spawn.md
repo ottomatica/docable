@@ -31,7 +31,7 @@ touch $LOCKFILE
 
 # Simple web server (listen on port 8888)
 # while true; do { echo -e "HTTP/1.1 200 OK\n\n$(date)"; } | nc -l 8888; done
-http-server -p 8888
+http-server -p 8888 2> /dev/null
 ```
 
 This will run a simple bash server that you can send commands to over the network.
