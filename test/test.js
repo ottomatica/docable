@@ -114,7 +114,7 @@ describe('Running edge cases', () => {
 
 });
 
-describe('Running basic commands [docker]', () => {
+describe('Running basic commands [docker]', async () => {
 
     let conn = Connector.getConnector('docker', 'docableContainer');
     await conn.pull('ubuntu:18.04', () => {}, false);
@@ -132,7 +132,7 @@ describe('Running basic commands [docker]', () => {
         expect(result.error).toBeUndefined();
         expect(result.status).toEqual(0);
 
-    }, 60000);
+    });
 
     test('Should create simple file with content', async () => {
         await conn.run('ubuntu:18.04', '/bin/bash');
