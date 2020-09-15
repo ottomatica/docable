@@ -186,6 +186,20 @@ describe('Running basic commands [docker]', () => {
 
     });
 
+    test('Should be able to run a command with tty', async () => {
+        await conn.run('ubuntu:18.04', '/bin/bash');
+
+        let result = spawnSync('node index.js report test/resources/docker/tty.md', { shell:true });
+
+        await conn.delete();
+
+
+        expect(result.error).toBeUndefined();
+        expect(result.stderr.toString()).toHaveLength(0);
+        expect(result.status).toEqual(0);
+
+    });
+
 
 });
 
