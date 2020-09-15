@@ -119,7 +119,8 @@ describe('Running basic commands [docker]', () => {
     let conn = Connector.getConnector('docker', 'docableContainer');
 
     test('Run a simple command', async () => {
-        await conn.pull('ubuntu:18.04', false);
+        await conn.pull('ubuntu:18.04', () => {}, false);
+
         if (await conn.containerExists()) await conn.delete();
         await conn.run('ubuntu:18.04', '/bin/bash');
 
@@ -156,6 +157,7 @@ describe('Running basic commands [docker]', () => {
     });
 
     test('Should be able to run a simple script', async () => {
+        await conn.pull('node:12-buster', () => {}, false);
         await conn.run('node:12-buster', '/bin/bash');
 
         let result = spawnSync('node index.js report test/resources/docker/script.md', { shell:true });

@@ -3,7 +3,7 @@
 
 Simple node script
 
-```node|{type:'script'}
+```js |{type:'script'}
 console.log('Hello script');
 console.log("Script " + "Runs.");
 ```
