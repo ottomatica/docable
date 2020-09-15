@@ -114,11 +114,15 @@ describe('Running edge cases', () => {
 
 });
 
-describe('Running basic commands [docker]', async () => {
+describe('Running basic commands [docker]', () => {
 
     let conn = Connector.getConnector('docker', 'docableContainer');
-    await conn.pull('ubuntu:18.04', () => {}, false);
-    await conn.pull('node:12-buster', () => {}, false);
+    test('Pull docker images', async () => {
+
+        await conn.pull('ubuntu:18.04', () => {}, false);
+        await conn.pull('node:12-buster', () => {}, false);
+
+    }, 120000 );
 
     test('Run a simple command', async () => {
 
