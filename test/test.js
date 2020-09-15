@@ -189,37 +189,44 @@ describe('Running basic commands [docker]', () => {
 
 });
 
-// describe('Running basic commands [bakerx/ssh]', () => {
+describe('Running basic commands [bakerx/ssh]', () => {
 
-//     const HOST = '192.168.99.10';
-//     let sshConfig = null;
-//     beforeAll(() => {
-//         execSync(`bakerx run docable-vm-test bionic-node --ip ${HOST} --memory 1024`, {stdio: 'inherit'});
+    const HOST = '192.168.99.10';
+    let sshConfig = null;
+    beforeAll(() => {
+        execSync(`bakerx run docable-vm-test bionic-node --ip ${HOST} --memory 1024`, {stdio: 'inherit'});
 
-//         sshConfig = JSON.parse(execSync(`bakerx ssh-info docable-vm-test --format json`).toString().trim());
-//     })
+        sshConfig = JSON.parse(execSync(`bakerx ssh-info docable-vm-test --format json`).toString().trim());
+    })
 
-//     afterAll(() => {
-//         // delete test vm
-//         execSync('bakerx delete vm docable-vm-test');
+    afterAll(() => {
+        // delete test vm
+        execSync('bakerx delete vm docable-vm-test');
         
-//         // // delete test files
-//         // execSync('rm /tmp/foo /tmp/foo.json /tmp/foo.yml /tmp/app.js');
-//     });
+        // // delete test files
+        // execSync('rm /tmp/foo /tmp/foo.json /tmp/foo.yml /tmp/app.js');
+    });
 
-//     test('Should be able to run a simple command', () => {
-//         let result = spawnSync('node index.js report test/resources/commands/ssh-command.yml', { shell:true });
+    test('Should be able to run a simple command', () => {
+        let result = spawnSync('node index.js report test/resources/commands/ssh-command.yml', { shell:true });
 
-//         expect(result.error).toBeUndefined();
-//         expect(result.status).toEqual(0);
-//     });
+        expect(result.error).toBeUndefined();
+        expect(result.status).toEqual(0);
+    });
 
-//     // Uses bakerx connector
-//     test('Should be able to run a simple script', () => {
-//         let result = spawnSync('node index.js report test/resources/commands/ssh-script.md', { shell:true });
+    // Uses bakerx connector
+    test('Should be able to run a simple script', () => {
+        let result = spawnSync('node index.js report test/resources/commands/ssh-script.md', { shell:true });
 
-//         expect(result.error).toBeUndefined();
-//         expect(result.stderr.toString()).toHaveLength(0);
-//     });
-// });
+        expect(result.error).toBeUndefined();
+        expect(result.stderr.toString()).toHaveLength(0);
+    });
+
+    test('Should be able to run a simple command in shell', () => {
+        let result = spawnSync('node index.js report test/resources/commands/ssh-shell.md', { shell:true });
+
+        expect(result.error).toBeUndefined();
+        expect(result.stderr.toString()).toHaveLength(0);
+    });
+});
 
