@@ -22,6 +22,14 @@ describe('Running basic commands [inline]', () => {
         expect(result.stderr.toString()).toHaveLength(0);
     });
 
+    test('Should be able to run a simple script', () => {
+        let result = spawnSync('node index.js report test/resources/commands/script.md', { shell:true });
+
+        expect(result.error).toBeUndefined();
+        expect(result.stderr.toString()).toHaveLength(0);
+    });
+
+
     test('Should fail on bad commands in pipes', () => {
         let result = spawnSync('node index.js report test/resources/commands/badpipe.md', { shell:true });
 
@@ -147,6 +155,20 @@ describe('Running basic commands [docker]', () => {
         expect(result.status).toEqual(0);
     });
 
+    test('Should be able to run a simple script', async () => {
+        await conn.run('node:12-buster', '/bin/bash');
+
+        let result = spawnSync('node index.js report test/resources/docker/script.md', { shell:true });
+
+        await conn.delete();
+
+
+        expect(result.error).toBeUndefined();
+        expect(result.stderr.toString()).toHaveLength(0);
+        expect(result.status).toEqual(0);
+
+    });
+
 });
 
 describe('Running basic commands [bakerx/ssh]', () => {
@@ -172,6 +194,14 @@ describe('Running basic commands [bakerx/ssh]', () => {
 
         expect(result.error).toBeUndefined();
         expect(result.status).toEqual(0);
+    });
+
+    // Uses bakerx connector
+    test('Should be able to run a simple script', () => {
+        let result = spawnSync('node index.js report test/resources/commands/ssh-script.md', { shell:true });
+
+        expect(result.error).toBeUndefined();
+        expect(result.stderr.toString()).toHaveLength(0);
     });
 });
 
