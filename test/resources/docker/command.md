@@ -21,3 +21,8 @@ Commands should set cwd based on `path: <file>`.
 ```bash|{type:'command', path: '/root/hello'}
 cat file.txt
 ```
+
+```bash|{type:'command', path: 'root'}
+pwd
+ls -l hello
+```
