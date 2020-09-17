@@ -74,12 +74,15 @@ describe('Running basic commands [inline]', () => {
         expect(result.stderr.toString()).toHaveLength(0);
     });
 
-    test('Should be able to spawn a command', () => {
-        let result = spawnSync('node index.js report test/resources/commands/spawn.md', { shell:true });
+    if( os.platform() != 'win32' )
+    {
+        test('Should be able to spawn a command', () => {
+            let result = spawnSync('node index.js report test/resources/commands/spawn.md', { shell:true });
 
-        expect(result.error).toBeUndefined();
-        expect(result.stderr.toString()).toHaveLength(0);
-    });
+            expect(result.error).toBeUndefined();
+            expect(result.stderr.toString()).toHaveLength(0);
+        });
+    }
 
     test('Should be able to run a command with path', () => {
         let result = spawnSync('node index.js report test/resources/commands/path.md', { shell:true });
