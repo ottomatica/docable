@@ -249,5 +249,15 @@ describe('Running basic commands [bakerx/ssh]', () => {
         expect(result.error).toBeUndefined();
         expect(result.stderr.toString()).toHaveLength(0);
     });
+
+    test('Should create simple file with content', () => {
+        let result = spawnSync('node index.js report test/resources/commands/ssh-file.md', { shell:true });
+
+        expect(result.error).toBeUndefined();
+        expect(result.stdout.toString()).toMatch('docable');
+    });
+
+
+
 });
 
