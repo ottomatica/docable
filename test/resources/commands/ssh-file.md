@@ -31,6 +31,29 @@ Remove directory.
 rm -rf docable_test
 ```
 
+
+Copy file.
+
+```bash|{type:'command'}
+mkdir -p DEST
+```
+
+```docker | {type:'copy'}
+COPY file.md DEST/file.md
+```
+
+Copy directories.
+
+```docker | {type:'copy'}
+COPY ../commands DEST/commands
+```
+
+```docker | {type:'command'}
+ls -l DEST/commands
+```
+
+Create file.
+
 ```nginx|{type: 'file', path: '/etc/nginx/nginx.conf'}
 user www-data;
 worker_processes auto;
