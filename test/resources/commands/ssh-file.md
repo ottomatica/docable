@@ -52,9 +52,9 @@ COPY ../commands DEST/commands
 ls -l DEST/commands
 ```
 
-Create file.
+Create file (with user.)
 
-```nginx|{type: 'file', path: '/etc/nginx/nginx.conf'}
+```nginx|{type: 'file', user: 'root', path: '/etc/nginx/nginx.conf'}
 user www-data;
 worker_processes auto;
 pid /run/nginx.pid;
