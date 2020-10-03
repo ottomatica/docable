@@ -23,7 +23,7 @@ jobs:
     - name: Install bakerx
       run: sudo npm install -g ottomatica/bakerx
     - name: Ensure we have base image.
-      run: bakerx pull ottomatica/bakerx#images bionic-node
+      run: bakerx pull bionic-node ottomatica/bakerx#images
     - name: Install Docker
       run: |
         brew install docker docker-machine
