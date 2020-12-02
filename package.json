@@ -26,7 +26,7 @@
     "cheerio": "^1.0.0-rc.3",
     "diff": "^4.0.2",
     "got": "^11.7.0",
-    "highlight.js": "^9.18.3",
+    "highlight.js": "^10.4.0",
     "infra.connectors": "github:ottomatica/infra.connectors",
     "js-yaml": "^3.14.0",
     "json5": "^2.1.3",
