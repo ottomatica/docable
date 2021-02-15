@@ -66,10 +66,10 @@ async function fromHtml($, setup, cwd, docDir, onProgress, vars) {
     if( onProgress ) {
         stepper.progress.on('data', onProgress );
     }
-    let conn = await stepper.buildConnector(setup, cwd, docDir);
+    let connectors = await stepper.buildConnector(setup, cwd, docDir);
 
     /* let { results, _, status } */
-    return stepper.runSteps( cells, $, conn, cwd, undefined, vars);
+    return stepper.runSteps(cells, $, connectors, cwd, undefined, vars);
 }
 
 
