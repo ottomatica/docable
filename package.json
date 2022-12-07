@@ -34,7 +34,7 @@
     "marked": "^1.2.0",
     "md5": "^2.3.0",
     "mustache": "^4.0.1",
-    "simple-git": "^2.20.1",
+    "simple-git": "^3.15.0",
     "slash": "^3.0.0",
     "sudo-prompt": "^9.2.1",
     "uuid": "^8.3.0",
